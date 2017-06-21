@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.bluejack16_2.cariprojek.RegisterActivity">
+
+    <TextView
+        android:id="@+id/tvEmailRegis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="25dp"
+        android:text="Email" />
+
+    <EditText
+        android:id="@+id/txtEmailRegis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvEmailRegis"
+        android:layout_below="@+id/tvEmailRegis"
+        android:ems="10"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:id="@+id/tvPasswordRegis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtEmailRegis"
+        android:layout_below="@+id/txtEmailRegis"
+        android:layout_marginTop="31dp"
+        android:text="Password" />
+
+    <EditText
+        android:id="@+id/txtPasswordRegis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/txtEmailRegis"
+        android:layout_below="@+id/tvPasswordRegis"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/txtNameRegis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_below="@+id/tvNameRegis"
+        android:layout_alignStart="@+id/tvNameRegis" />
+
+    <TextView
+        android:id="@+id/tvNameRegis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:layout_below="@+id/txtPasswordRegis"
+        android:layout_alignEnd="@+id/tvEmailRegis"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:id="@+id/tvAddressRegis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtNameRegis"
+        android:layout_below="@+id/txtNameRegis"
+        android:layout_marginTop="36dp"
+        android:text="Address" />
+
+    <EditText
+        android:id="@+id/txtAddressRegis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvAddressRegis"
+        android:layout_below="@+id/tvAddressRegis"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <TextView
+        android:id="@+id/tvPhoneRegis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtAddressRegis"
+        android:layout_below="@+id/txtAddressRegis"
+        android:layout_marginTop="26dp"
+        android:text="Phone" />
+
+    <EditText
+        android:id="@+id/txtPhoneRegis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvPhoneRegis"
+        android:layout_below="@+id/tvPhoneRegis"
+        android:ems="10"
+        android:inputType="phone" />
+
+    <Button
+        android:id="@+id/btnSubmitRegis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/txtPhoneRegis"
+        android:text="Submit" />
+</android.widget.RelativeLayout>
