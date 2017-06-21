@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "647910930752",
+    "project_id": "firebase-cariprojek"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647910930752:android:a734efce248a5306",
+        "android_client_info": {
+          "package_name": "edu.bluejack16_2.cariprojek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "647910930752-e1b15bqielfmfr5q5kh6rn97bqje14f1.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "647910930752-imo01nd6m8fp05qggvo2p6p3ia6mr40k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.bluejack16_2.cariprojek",
+            "certificate_hash": "eae1a75e958db896d64a2f14552f8c5ed45e356f"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCQZFY5DcOQajZFa1AOgDAtmm5Z36U6w4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

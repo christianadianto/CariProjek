@@ -49,18 +49,27 @@
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="31dp"
+        android:layout_marginTop="37dp"
         android:text="Login"
         android:layout_below="@+id/txtPassword"
-        android:layout_alignStart="@+id/txtPassword" />
+        android:layout_alignEnd="@+id/txtPassword" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="41dp"
-        android:layout_alignTop="@+id/btnLogin"
-        android:layout_toEndOf="@+id/btnLogin" />
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/sign_in_button"
+        android:layout_centerHorizontal="true" />
+
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/btnLogin"
+        android:layout_centerHorizontal="true" />
 
 </android.widget.RelativeLayout>
