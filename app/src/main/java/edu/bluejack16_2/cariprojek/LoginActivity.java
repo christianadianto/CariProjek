@@ -1,8 +1,12 @@
 package edu.bluejack16_2.cariprojek;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.AccessTokenTracker;
@@ -15,14 +19,28 @@ import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 
-public class LoginActivity extends AppCompatActivity {
+
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
 
     LoginButton loginButton;
     CallbackManager callbackManager;
     AccessTokenTracker accessTokenTracker;
     ProfileTracker profileTracker;
+    GoogleApiClient googleApiClient;
+    SignInButton signInButton;
+    Button btnLogin;
+    EditText txtEmail;
+    EditText txtPassword;
+    static final int REQ_CODE = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,18 +48,66 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
+        txtEmail = (EditText) findViewById(R.id.txtEmail);
+        txtPassword = (EditText) findViewById(R.id.txtPassword);
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
+        signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        //login google
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        // Build a GoogleApiClient with access to the Google Sign-In API and the
+        // options specified by gso.
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                startActivityForResult(intent,REQ_CODE);
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email="";
+                String password = "";
+                String err="";
+                email = txtEmail.getText().toString();
+                password = txtPassword.getText().toString();
+                if(email.equals("")){
+                    err = "email must be filled and valid";
+                    Toast.makeText(LoginActivity.this, err, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(password.equals("")){
+                    err="password must be filled";
+                    Toast.makeText(LoginActivity.this, err, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //facebook
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Profile profile = Profile.getCurrentProfile();
                 Toast.makeText(LoginActivity.this, profile.getName(), Toast.LENGTH_LONG).show();
-                //Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
-                //intent.putExtra("name",profile.getFirstName());
-                //startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                intent.putExtra("name",profile.getFirstName());
+                startActivity(intent);
             }
 
             @Override
@@ -51,13 +117,37 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException error) {
-
+                Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
+
     }
+
+    //facebook ?
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==REQ_CODE){
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleResult(result);
+        }
+    }
+
+    private void handleResult(GoogleSignInResult result){
+        if(result.isSuccess()){
+            GoogleSignInAccount account = result.getSignInAccount();
+            String name = account.getDisplayName();
+            Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("name",name);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }
