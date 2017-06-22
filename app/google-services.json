@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "647910930752",
-    "project_id": "firebase-cariprojek"
+    "firebase_url": "https://fir-cariprojek.firebaseio.com",
+    "project_id": "firebase-cariprojek",
+    "storage_bucket": "firebase-cariprojek.appspot.com"
   },
   "client": [
     {
@@ -12,6 +14,10 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "647910930752-1be1e74lvco5nc7dhc70r06qasvf3nr0.apps.googleusercontent.com",
+          "client_type": 3
+        },
         {
           "client_id": "647910930752-e1b15bqielfmfr5q5kh6rn97bqje14f1.apps.googleusercontent.com",
           "client_type": 3
@@ -35,11 +41,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "647910930752-1be1e74lvco5nc7dhc70r06qasvf3nr0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

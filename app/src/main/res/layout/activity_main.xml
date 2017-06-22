@@ -8,28 +8,25 @@
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:text="Login"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="46dp"
-        android:text="Login" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/btnRegister"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
         android:text="Register"
         android:layout_below="@+id/btnLogin"
-        android:layout_alignStart="@+id/btnLogin" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/btnExit"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Exit"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/btnRegister" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 </android.widget.RelativeLayout>
