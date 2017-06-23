@@ -13,6 +13,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -34,6 +36,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
 
@@ -45,6 +50,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     EditText txtEmail;
     EditText txtPassword;
     static final int REQ_CODE = 9001;
+    String facebookEmail;
+    String facebookPassword;
+    String facebookAddress;
+    String facebookPhone;
+    String facebookName;
 
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseUsers;
@@ -126,12 +136,45 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Profile profile = Profile.getCurrentProfile();
-                Toast.makeText(LoginActivity.this, profile.getName(), Toast.LENGTH_LONG).show();
+                final Profile profile = Profile.getCurrentProfile();
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                try {
+                                    facebookEmail = object.getString("email");
+                                    facebookName = object.getString("name");
+                                    facebookAddress = object.getString("address");
+                                    facebookAddress = object.getString("phone");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
 
-                Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
-                //intent.putExtra("user",profile);
-                startActivity(intent);
+                databaseUsers.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot child : dataSnapshot.getChildren())
+                        {
+                                String email = child.getValue(User.class).getEmail();
+                                if (email.equals(facebookEmail)){
+                                    Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                                    startActivity(intent);
+                                }
+
+                        }
+                        registerUser();
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
             }
 
             @Override
@@ -144,6 +187,31 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    private void registerUser() {
+        firebaseAuth.createUserWithEmailAndPassword(facebookEmail,"")
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            String id = firebaseAuth.getCurrentUser().getUid();
+                            DatabaseReference curr_user =  databaseUsers.child(id);
+
+                            curr_user.child("email").setValue(facebookEmail);
+                            curr_user.child("name").setValue(facebookName);
+                            curr_user.child("phone").setValue(facebookPhone);
+                            curr_user.child("address").setValue(facebookAddress);
+
+                            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                            startActivity(intent);
+                        }
+                        else{
+                            Toast.makeText(LoginActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
     }
 
