@@ -1,5 +1,6 @@
 package edu.bluejack16_2.cariprojek;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,16 +13,50 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    FirebaseAuth firebaseAuth;
+    DatabaseReference databaseUsers;
+    TextView tvName;
+    TextView tvEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+        View hView = navView.getHeaderView(0);
+        tvEmail = (TextView) hView.findViewById(R.id.user_email);
+        tvName = (TextView) hView.findViewById(R.id.user_name);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser user  = firebaseAuth.getCurrentUser();
+        databaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        if(user!=null){
+            //Toast.makeText(this, user.getEmail(), Toast.LENGTH_SHORT).show();
+            String email = user.getEmail();
+            tvEmail.setText(email);
+        }
+
+
+        getUserName();
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +75,27 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void getUserName() {
+        databaseUsers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()
+                     ) {
+                    String email = child.getValue(User.class).getEmail();
+                    if(email.equals(tvEmail.getText())){
+                        String name = child.getValue(User.class).getName();
+                        tvName.setText(name);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -67,8 +123,10 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_logout) {
+            firebaseAuth.signOut();
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

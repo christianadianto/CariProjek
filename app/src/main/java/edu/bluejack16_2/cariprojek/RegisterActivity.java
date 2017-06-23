@@ -71,11 +71,12 @@ public class RegisterActivity extends AppCompatActivity {
                                     String id = firebaseAuth.getCurrentUser().getUid();
                                     DatabaseReference curr_user =  databaseUsers.child(id);
 
+                                    curr_user.child("email").setValue(user.getEmail());
                                     curr_user.child("name").setValue(user.getName());
                                     curr_user.child("phone").setValue(user.getPhone());
                                     curr_user.child("address").setValue(user.getAddress());
 
-                                    Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                                     startActivity(intent);
                                 }
                                 else{

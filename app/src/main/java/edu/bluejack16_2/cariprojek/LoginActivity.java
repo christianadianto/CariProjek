@@ -1,24 +1,19 @@
 package edu.bluejack16_2.cariprojek;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
-import com.facebook.ProfileTracker;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -44,8 +39,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     LoginButton loginButton;
     CallbackManager callbackManager;
-    AccessTokenTracker accessTokenTracker;
-    ProfileTracker profileTracker;
     GoogleApiClient googleApiClient;
     SignInButton signInButton;
     Button btnLogin;
@@ -64,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
+
 
         txtEmail = (EditText) findViewById(R.id.txtEmail);
         txtPassword = (EditText) findViewById(R.id.txtPassword);
@@ -113,7 +107,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     Toast.makeText(LoginActivity.this, err, Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 firebaseAuth.signInWithEmailAndPassword(email,password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -135,8 +128,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onSuccess(LoginResult loginResult) {
                 Profile profile = Profile.getCurrentProfile();
                 Toast.makeText(LoginActivity.this, profile.getName(), Toast.LENGTH_LONG).show();
+
                 Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
-                intent.putExtra("name",profile.getFirstName());
+                //intent.putExtra("user",profile);
                 startActivity(intent);
             }
 
@@ -154,12 +148,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void checkUser() {
-        final String id = firebaseAuth.getCurrentUser().getUid();
+        final String ID = firebaseAuth.getCurrentUser().getUid();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
 
         databaseUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild(id)){
+
+                if(dataSnapshot.hasChild(ID)){
+                    Toast.makeText(LoginActivity.this, "", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
                     //intent.putExtra("name",name);
                     startActivity(intent);
