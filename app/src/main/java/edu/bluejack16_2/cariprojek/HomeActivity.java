@@ -1,9 +1,12 @@
 package edu.bluejack16_2.cariprojek;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -28,7 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    FirebaseAuth firebaseAuth;
+    SharedPreferences sharedPreferences;
     DatabaseReference databaseUsers;
     TextView tvName;
     TextView tvEmail;
@@ -44,19 +47,9 @@ public class HomeActivity extends AppCompatActivity
         tvEmail = (TextView) hView.findViewById(R.id.user_email);
         tvName = (TextView) hView.findViewById(R.id.user_name);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        sharedPreferences = getSharedPreferences("MyPref", MODE_PRIVATE);
 
-        FirebaseUser user  = firebaseAuth.getCurrentUser();
-        databaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
-
-        if(user!=null){
-            //Toast.makeText(this, user.getEmail(), Toast.LENGTH_SHORT).show();
-            String email = user.getEmail();
-            tvEmail.setText(email);
-        }
-
-
-        //getUserName();
+        setEmail_UserName();
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -76,27 +69,16 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        displaySelectedScreen(R.id.nav_home);
     }
 
-    private void getUserName() {
-        databaseUsers.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()
-                     ) {
-                    String email = child.getValue(User.class).getEmail();
-                    if(email.equals(tvEmail.getText())){
-                        String name = child.getValue(User.class).getName();
-                        tvName.setText(name);
-                    }
-                }
-            }
+    private void setEmail_UserName() {
+        String email = sharedPreferences.getString("email","android.studio@android.com");
+        String name = sharedPreferences.getString("name","Android Studio");
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        tvEmail.setText(email);
+        tvName.setText(name);
     }
 
     @Override
@@ -125,9 +107,13 @@ public class HomeActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-            firebaseAuth.signOut();
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.commit();
+            finish();
+
+//            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+//            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -137,27 +123,43 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_home) {
-            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_profile) {
-            Intent intent = new Intent(getApplicationContext(),ProfileActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_search_project) {
-
-        }
-//        } else if (id == R.id.nav_manage) {
+//        int id = item.getItemId();
 //
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
+//        if (id == R.id.nav_home) {
+//            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+//            startActivity(intent);
+//        } else if (id == R.id.nav_profile) {
+//            Intent intent = new Intent(getApplicationContext(),ProfileActivity.class);
+//            startActivity(intent);
+//        } else if (id == R.id.nav_search_project) {
 //
 //        }
 
+        displaySelectedScreen(item.getItemId());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void displaySelectedScreen(int itemID){
+        Fragment fragment = null;
+
+        switch (itemID){
+            case R.id.nav_home:
+                fragment = new MenuHomeFragment();
+                break;
+            case R.id.nav_profile:
+                fragment = new MenuProfileFragment();
+                break;
+            case R.id.nav_search_project:
+                fragment = new MenuSearchProjectFragment();
+                break;
+        }
+
+        if(fragment !=null){
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, fragment);
+            ft.commit();
+        }
     }
 }

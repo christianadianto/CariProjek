@@ -177,6 +177,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                             editor.commit();
                                                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                                             startActivity(intent);
+                                                            finish();
                                                         }
                                                     }
                                                     else{
@@ -190,6 +191,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                                                         Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
                                                         startActivity(intent);
+                                                        finish();
                                                     }
                                                 }
 
@@ -211,9 +213,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 parameters.putString("fields", "email,name");
                 request.setParameters(parameters);
                 request.executeAsync();
-                Toast.makeText(LoginActivity.this, "testing testing", Toast.LENGTH_LONG).show();
 
                 LoginManager.getInstance().logOut();
+
             }
 
             @Override
@@ -258,6 +260,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             editor.commit();
                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
                         }
@@ -320,6 +323,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
                 }
+                finish();
             }
 
             @Override
