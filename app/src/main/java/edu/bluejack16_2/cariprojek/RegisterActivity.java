@@ -1,6 +1,8 @@
 package edu.bluejack16_2.cariprojek;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,8 +30,9 @@ public class RegisterActivity extends AppCompatActivity {
     EditText txtAddress;
     EditText txtPhone;
 
-    DatabaseReference databaseUsers;
-    FirebaseAuth firebaseAuth;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +46,14 @@ public class RegisterActivity extends AppCompatActivity {
         txtAddress = (EditText) findViewById(R.id.txtAddressRegis);
         txtPhone = (EditText) findViewById(R.id.txtPhoneRegis);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        databaseUsers = FirebaseDatabase.getInstance().getReference("Users");
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Users");
+        sharedPreferences = getSharedPreferences("MyPref", Context.MODE_PRIVATE);
 
         btnRegis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email="";
+                String email = "";
                 String password = "";
                 String name = "";
                 String address = "";
@@ -60,34 +64,33 @@ public class RegisterActivity extends AppCompatActivity {
                 address = txtAddress.getText().toString();
                 phone = txtPhone.getText().toString();
 
-                final User user = new User(email,password,name,address,phone);
+                final User user = new User(email, password, name, address, phone);
                 isValid(user);
 
-                firebaseAuth.createUserWithEmailAndPassword(user.getEmail(),user.getPassword())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    String id = firebaseAuth.getCurrentUser().getUid();
-                                    DatabaseReference curr_user =  databaseUsers.child(id);
-
-                                    curr_user.child("email").setValue(user.getEmail());
-                                    curr_user.child("name").setValue(user.getName());
-                                    curr_user.child("phone").setValue(user.getPhone());
-                                    curr_user.child("address").setValue(user.getAddress());
-
-                                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                                    startActivity(intent);
-                                }
-                                else{
-                                    Toast.makeText(RegisterActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
 
 
+                DatabaseReference new_user = myRef.push();
+
+                new_user.child("email").setValue(user.getEmail());
+                new_user.child("password").setValue(user.getPassword());
+                new_user.child("name").setValue(user.getName());
+                new_user.child("phone").setValue(user.getPhone());
+                new_user.child("address").setValue(user.getAddress());
+
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putString("email",user.getEmail());
+                editor.putString("password", user.getPassword());
+                editor.putString("name",user.getName());
+                editor.putString("phone",user.getPhone());
+                editor.putString("address",user.getAddress());
+                editor.commit();
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
             }
         });
+
     }
     public  void isValid(User user){
         String err="";

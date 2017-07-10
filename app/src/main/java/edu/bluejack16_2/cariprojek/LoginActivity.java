@@ -1,6 +1,8 @@
 package edu.bluejack16_2.cariprojek;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -34,6 +37,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
@@ -58,6 +62,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseUsers;
+    SharedPreferences sharedPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         loginButton.setReadPermissions("email");
         signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         btnLogin = (Button) findViewById(R.id.btnLogin);
+
+        sharedPreference = getSharedPreferences("MyPref", Context.MODE_PRIVATE);
 
         //login google
         // Configure sign-in to request the user's ID, email address, and basic
@@ -117,20 +124,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     Toast.makeText(LoginActivity.this, err, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                firebaseAuth.signInWithEmailAndPassword(email,password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    checkUser();
-                                }
-                                else{
-                                    Toast.makeText(LoginActivity.this, "You need to register first", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+               checkUser(email,password);
             }
         });
+
+
 
         //facebook
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -143,6 +141,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 try {
+                                    Toast.makeText(LoginActivity.this, "login sukses", Toast.LENGTH_SHORT).show();
                                     facebookEmail = object.getString("email");
                                     facebookName = object.getString("name");
                                     facebookAddress = object.getString("address");
@@ -152,21 +151,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 }
                             }
                         });
+                Query query = FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("email").equalTo(facebookEmail);
 
-                databaseUsers.addValueEventListener(new ValueEventListener() {
+                query.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot child : dataSnapshot.getChildren())
-                        {
-                                String email = child.getValue(User.class).getEmail();
-                                if (email.equals(facebookEmail)){
-                                    Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
-                                    startActivity(intent);
-                                }
-
+                        Toast.makeText(LoginActivity.this, "checking email", Toast.LENGTH_SHORT).show();
+                        if (dataSnapshot.getChildrenCount()==0){
+                            registerUser();
                         }
-                        registerUser();
-
+                        Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                        startActivity(intent);
                     }
 
                     @Override
@@ -174,6 +169,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                     }
                 });
+                LoginManager.getInstance().logOut();
 
             }
 
@@ -191,43 +187,42 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void registerUser() {
-        firebaseAuth.createUserWithEmailAndPassword(facebookEmail,"")
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            String id = firebaseAuth.getCurrentUser().getUid();
-                            DatabaseReference curr_user =  databaseUsers.child(id);
-
-                            curr_user.child("email").setValue(facebookEmail);
-                            curr_user.child("name").setValue(facebookName);
-                            curr_user.child("phone").setValue(facebookPhone);
-                            curr_user.child("address").setValue(facebookAddress);
-
-                            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                            startActivity(intent);
-                        }
-                        else{
-                            Toast.makeText(LoginActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
 
     }
 
-    private void checkUser() {
-        final String ID = firebaseAuth.getCurrentUser().getUid();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+    private void checkUser(String userEmail, final String userPassword) {
 
-        databaseUsers.addValueEventListener(new ValueEventListener() {
+        Query query = FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("email").equalTo(userEmail);
+        final User user = new User();
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.hasChild(ID)){
-                    Toast.makeText(LoginActivity.this, "", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
-                    //intent.putExtra("name",name);
-                    startActivity(intent);
+                if(dataSnapshot.getChildrenCount()!=0) {
+                    for (DataSnapshot d : dataSnapshot.getChildren()) {
+                        String name = d.child("name").getValue().toString();
+                        String email = d.child("email").getValue().toString();
+                        String password = d.child("password").getValue().toString();
+                        String address = d.child("address").getValue().toString();
+                        String phone = d.child("phone").getValue().toString();
+
+                        if (password.equals(userPassword)) {
+
+                            SharedPreferences.Editor editor = sharedPreference.edit();
+
+                            editor.putString("email", user.getEmail());
+                            editor.putString("password", user.getPassword());
+                            editor.putString("name", user.getName());
+                            editor.putString("phone", user.getPhone());
+                            editor.putString("address", user.getAddress());
+                            editor.commit();
+                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
                 }
                 else{
                     Toast.makeText(LoginActivity.this, "You need to register first", Toast.LENGTH_SHORT).show();
@@ -239,6 +234,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             }
         });
+    }
+
+    public void saveData(User user){
+
     }
 
     //facebook ?

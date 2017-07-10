@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.bluejack16_2.cariprojek.ProfileFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Profile"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_toStartOf="@+id/tvEmailProfileContent"
+        android:id="@+id/tvTitleProfile" />
+
+    <TextView
+        android:id="@+id/tvProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:layout_marginTop="19dp"
+        android:layout_below="@+id/tvTitleProfile"
+        android:layout_alignEnd="@+id/tvNameProfile" />
+
+    <TextView
+        android:id="@+id/tvNameProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="74dp"
+        android:text="Name"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/tvAddressProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvNameProfile"
+        android:layout_marginTop="21dp"
+        android:text="Address" />
+
+    <TextView
+        android:id="@+id/tvPhoneProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvAddressProfile"
+        android:layout_marginTop="23dp"
+        android:text="Phone Number" />
+
+    <TextView
+        android:id="@+id/tvEmailProfileContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_alignBaseline="@+id/tvProfile"
+        android:layout_alignBottom="@+id/tvProfile"
+        android:layout_alignStart="@+id/tvAddressProfileContent" />
+
+    <TextView
+        android:id="@+id/tvNameProfileContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tvEmailProfileContent"
+        android:layout_alignTop="@+id/tvNameProfile"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvAddressProfileContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvPhoneProfile"
+        android:layout_centerHorizontal="true"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvPhoneProfileContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tvPhoneProfile"
+        android:layout_centerHorizontal="true"
+        android:text="TextView" />
+
+
+</RelativeLayout>
