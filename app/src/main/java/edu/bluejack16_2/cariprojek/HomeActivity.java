@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity
         }
 
 
-        getUserName();
+        //getUserName();
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
