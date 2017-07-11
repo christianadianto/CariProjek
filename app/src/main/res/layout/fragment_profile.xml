@@ -11,11 +11,11 @@
         android:layout_height="wrap_content"
         android:text="My Profile"
         android:textSize="20sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:layout_toStartOf="@+id/tvEmailProfileContent"
-        android:id="@+id/tvTitleProfile" />
+        android:id="@+id/tvTitleProfile"
+        android:layout_marginTop="51dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/tvProfile"
@@ -30,61 +30,59 @@
         android:id="@+id/tvNameProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="74dp"
+        android:layout_marginTop="21dp"
         android:text="Name"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/tvEmailProfileContent"
         android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/tvAddressProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_marginTop="35dp"
+        android:text="Address"
         android:layout_below="@+id/tvNameProfile"
-        android:layout_marginTop="21dp"
-        android:text="Address" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/tvPhoneProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvAddressProfile"
-        android:layout_marginTop="23dp"
-        android:text="Phone Number" />
+        android:text="Phone Number"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/tvEmailProfileContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:layout_alignBaseline="@+id/tvProfile"
-        android:layout_alignBottom="@+id/tvProfile"
-        android:layout_alignStart="@+id/tvAddressProfileContent" />
+        android:layout_below="@+id/tvProfile"
+        android:layout_alignStart="@+id/tvProfile" />
 
     <TextView
         android:id="@+id/tvNameProfileContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/tvEmailProfileContent"
-        android:layout_alignTop="@+id/tvNameProfile"
-        android:text="TextView" />
+        android:text="TextView"
+        android:layout_below="@+id/tvNameProfile"
+        android:layout_alignStart="@+id/tvEmailProfileContent" />
 
     <TextView
         android:id="@+id/tvAddressProfileContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tvPhoneProfile"
-        android:layout_centerHorizontal="true"
-        android:text="TextView" />
+        android:text="TextView"
+        android:layout_below="@+id/tvAddressProfile"
+        android:layout_alignStart="@+id/tvNameProfileContent" />
 
     <TextView
         android:id="@+id/tvPhoneProfileContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tvPhoneProfile"
-        android:layout_centerHorizontal="true"
-        android:text="TextView" />
+        android:text="TextView"
+        android:layout_below="@+id/tvPhoneProfile"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

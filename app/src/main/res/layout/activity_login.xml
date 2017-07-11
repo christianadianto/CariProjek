@@ -18,13 +18,13 @@
 
     <EditText
         android:id="@+id/txtEmail"
-        android:hint="Email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:layout_alignStart="@+id/tvEmail"
         android:layout_below="@+id/tvEmail"
-        android:layout_alignStart="@+id/tvEmail" />
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
 
     <TextView
         android:id="@+id/tvPassword"

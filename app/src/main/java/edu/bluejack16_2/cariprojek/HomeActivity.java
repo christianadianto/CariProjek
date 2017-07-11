@@ -123,17 +123,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-//        int id = item.getItemId();
-//
-//        if (id == R.id.nav_home) {
-//            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
-//            startActivity(intent);
-//        } else if (id == R.id.nav_profile) {
-//            Intent intent = new Intent(getApplicationContext(),ProfileActivity.class);
-//            startActivity(intent);
-//        } else if (id == R.id.nav_search_project) {
-//
-//        }
+
 
         displaySelectedScreen(item.getItemId());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
