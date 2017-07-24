@@ -1,0 +1,84 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.bluejack16_2.cariprojek.CreateProjectFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/textName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Poject Name"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:id="@+id/txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textName"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name" />
+
+    <TextView
+        android:id="@+id/textCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Project Category"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/txtName" />
+
+    <Spinner
+        android:id="@+id/spinnerCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textCategory"
+        android:entries="@array/category_project"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:id="@+id/textDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Project Description"
+        android:layout_below="@+id/spinnerCategory"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:id="@+id/txtDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:text="Name"
+        android:layout_below="@+id/textDescription" />
+
+    <TextView
+        android:id="@+id/textBudget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Project Budget"
+        android:layout_below="@+id/txtDescription"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:id="@+id/txtBudget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textBudget"
+        android:ems="10"
+        android:inputType="number"
+        android:text="" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textBudget"
+        android:layout_below="@+id/txtBudget"
+        android:layout_margin="10dp"
+        android:text="Create" />
+
+
+</RelativeLayout>

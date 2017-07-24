@@ -15,10 +15,14 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="Create Project" />
         <item
+            android:id="@+id/nav_update_project"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Update Project" />
+        />
+        <item
             android:id="@+id/nav_search_project"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Search Project" />
-
     </group>
 
     <!--<item android:title="Communicate">-->

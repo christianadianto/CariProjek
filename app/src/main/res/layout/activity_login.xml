@@ -24,7 +24,8 @@
         android:layout_below="@+id/tvEmail"
         android:ems="10"
         android:hint="Email"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:text="test@gmail.com"/>
 
     <TextView
         android:id="@+id/tvPassword"
@@ -43,7 +44,8 @@
         android:ems="10"
         android:inputType="textPassword"
         android:layout_below="@+id/tvPassword"
-        android:layout_alignStart="@+id/tvPassword" />
+        android:layout_alignStart="@+id/tvPassword"
+        android:text="abcabc"/>
 
     <Button
         android:id="@+id/btnLogin"

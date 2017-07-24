@@ -37,9 +37,6 @@ public class MenuProfileFragment extends Fragment {
         viewProfilePagerAdapter.addFragmentandTitle(new ProfileFragment(),"My Profile");
         viewProfilePagerAdapter.addFragmentandTitle(new ProfileCreateProjectFragment(),"Created Project");
         viewProfilePagerAdapter.addFragmentandTitle(new ProfileWorkProjectFragment(),"Worked Project");
-//        ViewProfilePagerAdapter viewPagerAdapter = new ViewProfilePagerAdapter(getSupportFragmentManager());
-//        viewPagerAdapter.addFragmentandTitle(new ProfileCreateProjectFragment(),"Created Project");
-//        viewPagerAdapter.addFragmentandTitle(new ProfileWorkProjectFragment(),"Worked Project");
 
         viewPager.setAdapter(viewProfilePagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

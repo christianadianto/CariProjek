@@ -64,10 +64,8 @@ public class RegisterActivity extends AppCompatActivity {
                 address = txtAddress.getText().toString();
                 phone = txtPhone.getText().toString();
 
-                final User user = new User(email, password, name, address, phone);
+                User user = new User(email, password, name, address, phone);
                 isValid(user);
-
-
 
                 DatabaseReference new_user = myRef.push();
 
@@ -76,7 +74,6 @@ public class RegisterActivity extends AppCompatActivity {
                 new_user.child("name").setValue(user.getName());
                 new_user.child("phone").setValue(user.getPhone());
                 new_user.child("address").setValue(user.getAddress());
-
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 

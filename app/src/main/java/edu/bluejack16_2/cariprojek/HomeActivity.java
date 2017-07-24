@@ -142,7 +142,14 @@ public class HomeActivity extends AppCompatActivity
                 fragment = new MenuProfileFragment();
                 break;
             case R.id.nav_search_project:
-                fragment = new MenuSearchProjectFragment();
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_create_project:
+                fragment = new CreateProjectFragment();
+                break;
+            case R.id.nav_update_project:
+                fragment = new UpdateProjectFragment();
                 break;
         }
 

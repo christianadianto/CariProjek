@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -242,6 +243,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                 if(dataSnapshot.getChildrenCount()!=0) {
                     for (DataSnapshot d : dataSnapshot.getChildren()) {
+                        Log.e("find me", d.getKey());
                         String name = d.child("name").getValue().toString();
                         String email = d.child("email").getValue().toString();
                         String password = d.child("password").getValue().toString();
