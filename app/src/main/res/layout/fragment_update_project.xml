@@ -122,9 +122,18 @@
         android:id="@+id/btnUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Update"
         android:layout_below="@+id/tvKey"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:text="Update" />
+        android:layout_toStartOf="@+id/tvKey" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:layout_alignBaseline="@+id/btnUpdate"
+        android:layout_alignBottom="@+id/btnUpdate"
+        android:layout_alignEnd="@+id/cbUpdateStatus" />
 
 </RelativeLayout>

@@ -50,6 +50,7 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
     String [] projectNames;
 
     Button btnUpdate;
+    Button btnDelete;
     DatabaseReference databaseReference;
 
     public UpdateProjectFragment() {
@@ -70,6 +71,7 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
         txtDescription = (EditText) view.findViewById(R.id.txtUpdateDescription);
         tvKey = (TextView) view.findViewById(R.id.tvKey);
         btnUpdate = (Button) view.findViewById(R.id.btnUpdate);
+        btnDelete = (Button) view.findViewById(R.id.btnDelete);
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Projects");
@@ -114,6 +116,7 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
         });
 
         btnUpdate.setOnClickListener(this);
+        btnDelete.setOnClickListener(this);
 
         return view;
     }
@@ -199,7 +202,6 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v == btnUpdate){
-            Toast.makeText(getActivity(), "btnUpdate clicked", Toast.LENGTH_SHORT).show();
             final String name = txtProjectName.getText().toString();
             final String category = spinnerCategory.getSelectedItem().toString();
             final String description = txtDescription.getText().toString();
@@ -216,6 +218,15 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
             Project project = new Project(name,category,description,budget,status,timestamp,tvKey.getText().toString());
            updateProject(project);
         }
+        else if(v == btnDelete){
+            removeProject(tvKey.getText().toString());
+        }
+    }
+
+    private void removeProject(String id) {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Projects").child(id);
+        databaseReference.removeValue();
+        Toast.makeText(getActivity(), "Success to remove project", Toast.LENGTH_SHORT).show();
     }
 
     private void updateProject(Project project) {
