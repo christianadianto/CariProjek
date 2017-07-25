@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/tvDataName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="36dp"
+        android:text="name" />
+
+    <TextView
+        android:id="@+id/tvDataCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="category"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/tvDataName"
+        android:layout_alignStart="@+id/tvDataDescription" />
+
+    <TextView
+        android:id="@+id/tvDataDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:text="description"
+        android:layout_below="@+id/tvDataCategory"
+        android:layout_alignStart="@+id/tvDataName" />
+
+    <TextView
+        android:id="@+id/tvDataBudget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="budget"
+        android:layout_below="@+id/tvDataDescription"
+        android:layout_alignStart="@+id/tvDataDescription" />
+
+    <TextView
+        android:id="@+id/tvDataStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:layout_alignBaseline="@+id/tvDataBudget"
+        android:layout_alignBottom="@+id/tvDataBudget"
+        android:layout_toEndOf="@+id/tvDataDescription"
+        android:layout_marginStart="42dp" />
+</RelativeLayout>
