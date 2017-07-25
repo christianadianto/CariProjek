@@ -2,9 +2,11 @@ package edu.bluejack16_2.cariprojek;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +32,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UpdateProjectFragment extends Fragment {
+public class UpdateProjectFragment extends Fragment implements View.OnClickListener{
 
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -48,6 +50,7 @@ public class UpdateProjectFragment extends Fragment {
     String [] projectNames;
 
     Button btnUpdate;
+    DatabaseReference databaseReference;
 
     public UpdateProjectFragment() {
         // Required empty public constructor
@@ -68,7 +71,6 @@ public class UpdateProjectFragment extends Fragment {
         tvKey = (TextView) view.findViewById(R.id.tvKey);
         btnUpdate = (Button) view.findViewById(R.id.btnUpdate);
 
-        projects = new ArrayList<Project>();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Projects");
         sharedPreferences = this.getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
@@ -77,15 +79,30 @@ public class UpdateProjectFragment extends Fragment {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Toast.makeText(getActivity(), "test", Toast.LENGTH_SHORT).show();
-                for (DataSnapshot data: dataSnapshot.getChildren())
-                {
-                        projects.add(new Project(data.child("name").getValue().toString(), data.child("category").getValue().toString(),
-                                data.child("description").getValue().toString(),Integer.parseInt(data.child("budget").getValue().toString()),
-                                data.child("status").getValue().toString(), data.child("timestamp").getValue().toString(),data.getKey()));
-                }
-                setProjectList();
+                projects = new ArrayList<Project>();
+                String name = "";
+                String category = "";
+                String description = "";
+                int budget = 0;
+                String status ="";
+                String timestamp = "";
+                String id = "";
+                if(dataSnapshot.getChildrenCount()!=0) {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        name = data.child("name").getValue().toString();
+                        category = data.child("category").getValue().toString();
+                        description = data.child("description").getValue().toString();
+                        budget = Integer.parseInt(data.child("budget").getValue().toString());
+                        status = data.child("status").getValue().toString();
+                        timestamp = data.child("timestamp").getValue().toString();
+                        id = data.child("id").getValue().toString();
 
+
+                        projects.add(new Project(name, category, description, budget,
+                                status, timestamp,id));
+                    }
+                    setProjectList();
+                }
             }
 
 
@@ -96,6 +113,7 @@ public class UpdateProjectFragment extends Fragment {
             }
         });
 
+        btnUpdate.setOnClickListener(this);
 
         return view;
     }
@@ -127,7 +145,6 @@ public class UpdateProjectFragment extends Fragment {
         spinnerProject.getOnItemSelectedListener();
 
         spinnerProject.setSelection(0);
-        Toast.makeText(getActivity(), "set success", Toast.LENGTH_SHORT).show();
 
         projectSpinnerListener();
     }
@@ -136,14 +153,21 @@ public class UpdateProjectFragment extends Fragment {
         spinnerProject.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), "position"+position, Toast.LENGTH_SHORT).show();
-                String projectName = projects.get(position).getName();
-                String projectBudget = String.valueOf(projects.get(position).getBudget());
-                String projectDescription = projects.get(position).getDescription();
-                String projectStatus = projects.get(position).getStatus();
-                String key = projects.get(position).getKey();
-                String category = projects.get(position).getCategory();
 
+                String projectName="";
+                String projectBudget="";
+                String projectDescription="";
+                String projectStatus = "";
+                String key = "";
+                String category="";
+                if(projects.size()>0) {
+                    projectName = projects.get(position).getName();
+                    projectBudget = String.valueOf(projects.get(position).getBudget());
+                    projectDescription = projects.get(position).getDescription();
+                    projectStatus = projects.get(position).getStatus();
+                    key = projects.get(position).getId();
+                    category = projects.get(position).getCategory();
+                }
                 txtProjectName.setText(projectName);
                 txtDescription.setText(projectDescription);
                 txtBudget.setText(projectBudget);
@@ -170,7 +194,35 @@ public class UpdateProjectFragment extends Fragment {
 
             }
         });
+    }
 
+    @Override
+    public void onClick(View v) {
+        if(v == btnUpdate){
+            Toast.makeText(getActivity(), "btnUpdate clicked", Toast.LENGTH_SHORT).show();
+            final String name = txtProjectName.getText().toString();
+            final String category = spinnerCategory.getSelectedItem().toString();
+            final String description = txtDescription.getText().toString();
+            final int budget = Integer.parseInt(txtBudget.getText().toString());
+            String status="";
+
+            if(cbStatus.isChecked()){
+                status = "Closed";
+            }
+            else{
+                status = "Open";
+            }
+            String timestamp = String.valueOf((System.currentTimeMillis()/1000));
+            Project project = new Project(name,category,description,budget,status,timestamp,tvKey.getText().toString());
+           updateProject(project);
+        }
+    }
+
+    private void updateProject(Project project) {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Projects").child(project.getId());
+
+        databaseReference.setValue(project);
+        databaseReference.child("email").setValue(email);
     }
 
 }

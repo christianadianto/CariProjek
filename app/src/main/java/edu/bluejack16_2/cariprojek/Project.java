@@ -12,7 +12,7 @@ public class Project {
     private String status;
     private String timestamp;
     private int budget;
-    private String key;
+    private String id;
 
     public Project(String name, String category, String description, int budget) {
         this.name = name;
@@ -24,22 +24,30 @@ public class Project {
         this.timestamp = timestampLong.toString();
     }
 
-    public Project(String name, String category, String description, int budget, String status, String created, String key){
+    public Project(String name, String category, String description, int budget, String status, String created, String id){
         this.name = name;
         this.category = category;
         this.description = description;
         this.budget = budget;
         this.status = status;
         this.timestamp = created;
-        this.key = key;
+        this.id = id;
     }
 
-    public String getKey() {
-        return key;
+    public Project(String name, String category, String description, int budget, String status){
+        this.name = name;
+        this.category = category;
+        this.description = description;
+        this.budget = budget;
+        this.status = status;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -73,6 +73,7 @@ public class CreateProjectFragment extends Fragment implements View.OnClickListe
             Project project = new Project(name, category, description, budget);
 
             DatabaseReference new_project = myRef.push();
+            new_project.child("id").setValue(new_project.getKey());
             new_project.child("email").setValue(email);
             new_project.child("name").setValue(project.getName());
             new_project.child("description").setValue(project.getDescription());

@@ -160,7 +160,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                 @Override
                                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                                     if(dataSnapshot.getChildrenCount()!=0) {
-                                                        Toast.makeText(LoginActivity.this, "data ada", Toast.LENGTH_SHORT).show();
                                                         for (DataSnapshot d : dataSnapshot.getChildren()) {
                                                             String name = d.child("name").getValue().toString();
                                                             String email = d.child("email").getValue().toString();
