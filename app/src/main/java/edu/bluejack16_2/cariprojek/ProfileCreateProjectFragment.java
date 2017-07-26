@@ -2,6 +2,7 @@ package edu.bluejack16_2.cariprojek;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -90,7 +91,10 @@ public class ProfileCreateProjectFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), listViewProjectAdapter.getItem(position).toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), listViewHomeAdapter.getItem(position).toString(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), ProjectReviewActivity.class);
+                intent.putExtra("ID",listViewProjectAdapter.getItem(position).toString());
+                startActivity(intent);
             }
         });
 

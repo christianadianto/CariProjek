@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvDataHomeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="36dp"
+        android:text="name" />
+
+    <TextView
+        android:id="@+id/tvDataHomeCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="category"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/tvDataHomeName"
+        android:layout_alignStart="@+id/tvDataHomeDescription" />
+
+    <TextView
+        android:id="@+id/tvDataHomeDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:text="description"
+        android:layout_below="@+id/tvDataHomeCategory"
+        android:layout_alignStart="@+id/tvDataHomeName" />
+
+    <TextView
+        android:id="@+id/tvDataHomeBudget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="budget"
+        android:layout_below="@+id/tvDataHomeDescription"
+        android:layout_alignStart="@+id/tvDataHomeDescription" />
+
+    <TextView
+        android:id="@+id/tvDataHomeStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:layout_alignBaseline="@+id/tvDataHomeBudget"
+        android:layout_alignBottom="@+id/tvDataHomeBudget"
+        android:layout_toEndOf="@+id/tvDataHomeDescription"
+        android:layout_marginStart="42dp" />
+
+</RelativeLayout>

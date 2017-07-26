@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="edu.bluejack16_2.cariprojek">
+    package="edu.bluejack16_2.cariprojek">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -56,7 +56,8 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".ProjectReviewActivity"></activity>
     </application>
 
 </manifest>
