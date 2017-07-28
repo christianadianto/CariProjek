@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,21 +60,30 @@ public class MenuHomeFragment extends Fragment {
                 String status ="";
                 String timestamp = "";
                 String id = "";
+                double longitude=0;
+                double latitude=0;
+
+
+                Log.e("DATASNAPHOT", "onDataChange: "+dataSnapshot );
                 if(dataSnapshot.getChildrenCount()!=0){
                     for (DataSnapshot data:dataSnapshot.getChildren()) {
-                        name = data.child("name").getValue().toString();
-                        category = data.child("category").getValue().toString();
-                        description = data.child("description").getValue().toString();
-                        budget = Integer.parseInt(data.child("budget").getValue().toString());
-                        status = data.child("status").getValue().toString();
-                        timestamp = data.child("timestamp").getValue().toString();
-                        id = data.child("id").getValue().toString();
 
-                        Project project = new Project(name,category,description,budget,status,timestamp,id);
-                        if(status.equals("Open")) {
+                        name = data.child("project").child("name").getValue().toString();
+                        category = data.child("project").child("category").getValue().toString();
+                        description = data.child("project").child("description").getValue().toString();
+                        budget = Integer.parseInt(data.child("project").child("budget").getValue().toString());
+                        status = data.child("project").child("status").getValue().toString();
+                        timestamp = data.child("project").child("timestamp").getValue().toString();
+                        id = data.getKey();
+                        longitude = Double.parseDouble(data.child("project").child("longitude").getValue().toString());
+                        latitude = Double.parseDouble(data.child("project").child("latitude").getValue().toString());
+
+                        Project project = new Project(name, category, description, budget, status, timestamp, id, latitude, longitude);
+                        if (status.equals("Open")) {
                             listViewHomeAdapter.add(project);
                             listView.setAdapter(listViewHomeAdapter);
                         }
+
                     }
                 }
             }
@@ -87,10 +97,10 @@ public class MenuHomeFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), listViewHomeAdapter.getItem(position).toString(), Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(getActivity(), ProjectReviewActivity.class);
-//                intent.putExtra("ID",listViewHomeAdapter.getItem(position).toString());
-//                startActivity(intent);
+//                Toast.makeText(getContext(), listViewHomeAdapter.getItem(position).toString(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), ProjectReviewActivity.class);
+                intent.putExtra("ID",listViewHomeAdapter.getItem(position).toString());
+                startActivity(intent);
             }
         });
 

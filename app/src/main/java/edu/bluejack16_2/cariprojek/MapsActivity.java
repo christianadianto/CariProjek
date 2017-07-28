@@ -1,5 +1,7 @@
 package edu.bluejack16_2.cariprojek;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -8,6 +10,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -15,9 +23,22 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Vector;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -31,6 +52,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Location mLastKnownLocation;
     private CameraPosition mCameraPosition;
 
+    private GPSTracker gpsTracker;
+    private Location location;
+    private LatLng currLocation;
+    private HashMap<Marker, String> mHashMap;
+    private Vector<Project> projects;
+    private Marker selectedMarker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +67,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-    }
 
+        gpsTracker = new GPSTracker(getApplicationContext());
+        mHashMap = new HashMap<>();
+    }
 
     /**
      * Manipulates the map once available.
@@ -65,6 +95,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         updateLocationUI();
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
+        getCurrentLocation();
+        addProjectMarker();
+        clickMarker();
     }
 
     private void getDeviceLocation() {
@@ -79,6 +112,81 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
 
+    }
+
+    private void getCurrentLocation(){
+        try {
+            location = gpsTracker.getLocation();
+
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+
+            currLocation = new LatLng(latitude, longitude);
+
+            drawCurrRadius(latitude, longitude);
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(currLocation));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(15.0f));
+
+        }catch (Exception e){
+            Log.e("location", String.valueOf(e));
+        }
+
+    }
+
+    private void drawCurrRadius(double latitude, double longitude){
+
+        Circle circle = mMap.addCircle(new CircleOptions()
+                .center(new LatLng(latitude, longitude))
+                .radius(800)
+                .strokeColor(0xffff0000)
+                .strokeWidth(1)
+                .fillColor(0x44ff0000));
+    }
+
+    private void getProject(){
+        ProjectController.getInstance();
+        projects = ProjectController.getProjects();
+    }
+
+    private void addProjectMarker(){
+        getProject();
+        for (Project project:projects) {
+            if(project.getStatus().equals("Open"))
+                isInDistance(project.getLatitude(), project.getLongitude(), project.getName(), project.getId());
+        }
+
+    }
+
+    private void isInDistance(double targetLat, double targetLong, String projectName, String key){
+
+        float[] dist = new float[1];
+
+        Location.distanceBetween(location.getLatitude(), location.getLongitude(), targetLat, targetLong, dist);
+
+        if(dist[0]/800 <= 1) {
+            Marker marker = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(targetLat, targetLong))
+                    .title(projectName)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
+            mHashMap.put(marker, key);
+        }
+    }
+
+    private void clickMarker(){
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener(){
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                if(selectedMarker != null && marker.toString().equals(selectedMarker.toString())) {
+                    String key = mHashMap.get(marker);
+                    Toast.makeText(MapsActivity.this, key, Toast.LENGTH_SHORT).show();
+                }
+                selectedMarker = marker;
+                return false;
+            }
+        });
     }
 
     @Override

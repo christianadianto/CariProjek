@@ -29,11 +29,9 @@ import java.util.ArrayList;
  */
 public class ProfileCreateProjectFragment extends Fragment {
 
-
     DatabaseReference myRef;
     SharedPreferences sharedPreferences;
     String email;
-
 
     public ProfileCreateProjectFragment() {
         // Required empty public constructor
@@ -63,6 +61,8 @@ public class ProfileCreateProjectFragment extends Fragment {
                 String status ="";
                 String timestamp = "";
                 String id = "";
+                double longitude=0;
+                double latitude=0;
                 if(dataSnapshot.getChildrenCount()!=0){
                     for (DataSnapshot data:dataSnapshot.getChildren()) {
                         name = data.child("name").getValue().toString();
@@ -72,8 +72,10 @@ public class ProfileCreateProjectFragment extends Fragment {
                         status = data.child("status").getValue().toString();
                         timestamp = data.child("timestamp").getValue().toString();
                         id = data.child("id").getValue().toString();
+                        longitude = Double.parseDouble(data.child("longitude").getValue().toString());
+                        latitude = Double.parseDouble(data.child("latitude").getValue().toString());
 
-                        Project project = new Project(name,category,description,budget,status,timestamp,id);
+                        Project project = new Project(name,category,description,budget,status,timestamp,id,latitude,longitude);
                         if(status.equals("Open")) {
                             listViewProjectAdapter.add(project);
                             listView.setAdapter(listViewProjectAdapter);

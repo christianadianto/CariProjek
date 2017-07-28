@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ProjectController.getInstance();
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegis = (Button) findViewById(R.id.btnRegister);
         btnExit = (Button) findViewById(R.id.btnExit);

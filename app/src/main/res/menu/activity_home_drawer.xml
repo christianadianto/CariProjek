@@ -23,6 +23,11 @@
             android:id="@+id/nav_search_project"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Search Project" />
+        <item
+            android:id="@+id/nav_learning_module"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Learning Module"
+        />
     </group>
 
     <!--<item android:title="Communicate">-->

@@ -13,8 +13,10 @@ public class Project {
     private String timestamp;
     private int budget;
     private String id;
+    private double latitude;
+    private double longitude;
 
-    public Project(String name, String category, String description, int budget) {
+    public Project(String name, String category, String description, int budget, double latitude, double longitude) {
         this.name = name;
         this.category = category;
         this.description = description;
@@ -22,9 +24,11 @@ public class Project {
         this.status = "Open";
         Long timestampLong = System.currentTimeMillis()/1000;
         this.timestamp = timestampLong.toString();
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
-    public Project(String name, String category, String description, int budget, String status, String created, String id){
+    public Project(String name, String category, String description, int budget, String status, String created, String id, double latitude, double longitude){
         this.name = name;
         this.category = category;
         this.description = description;
@@ -32,6 +36,8 @@ public class Project {
         this.status = status;
         this.timestamp = created;
         this.id = id;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public Project(String name, String category, String description, int budget, String status){
@@ -96,5 +102,21 @@ public class Project {
 
     public void setBudget(int budget) {
         this.budget = budget;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

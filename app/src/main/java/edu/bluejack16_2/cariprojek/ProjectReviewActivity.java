@@ -20,6 +20,5 @@ public class ProjectReviewActivity extends AppCompatActivity {
         tvID = (TextView) findViewById(R.id.tvID);
         tvID.setText(id);
 
-
     }
 }

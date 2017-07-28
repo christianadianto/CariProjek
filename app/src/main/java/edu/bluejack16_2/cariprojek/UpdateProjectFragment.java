@@ -39,6 +39,8 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
     SharedPreferences sharedPreferences;
     String email;
     ArrayList<Project>projects;
+    Double longitude;
+    Double latitude;
 
     Spinner spinnerProject;
     Spinner spinnerCategory;
@@ -89,6 +91,8 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
                 String status ="";
                 String timestamp = "";
                 String id = "";
+                double latitude=0;
+                double longitude=0;
                 if(dataSnapshot.getChildrenCount()!=0) {
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         name = data.child("name").getValue().toString();
@@ -98,10 +102,11 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
                         status = data.child("status").getValue().toString();
                         timestamp = data.child("timestamp").getValue().toString();
                         id = data.child("id").getValue().toString();
-
+                        longitude = Double.parseDouble(data.child("longitude").getValue().toString());
+                        latitude = Double.parseDouble(data.child("latitude").getValue().toString());
 
                         projects.add(new Project(name, category, description, budget,
-                                status, timestamp,id));
+                                status, timestamp,id,latitude,longitude));
                     }
                     setProjectList();
                 }
@@ -170,6 +175,8 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
                     projectStatus = projects.get(position).getStatus();
                     key = projects.get(position).getId();
                     category = projects.get(position).getCategory();
+                    latitude = projects.get(position).getLatitude();
+                    longitude = projects.get(position).getLongitude();
                 }
                 txtProjectName.setText(projectName);
                 txtDescription.setText(projectDescription);
@@ -215,8 +222,8 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
                 status = "Open";
             }
             String timestamp = String.valueOf((System.currentTimeMillis()/1000));
-            Project project = new Project(name,category,description,budget,status,timestamp,tvKey.getText().toString());
-           updateProject(project);
+            Project project = new Project(name,category,description,budget,status,timestamp,tvKey.getText().toString(), latitude, longitude);
+            updateProject(project);
         }
         else if(v == btnDelete){
             removeProject(tvKey.getText().toString());

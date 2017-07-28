@@ -151,6 +151,9 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_update_project:
                 fragment = new UpdateProjectFragment();
                 break;
+            case R.id.nav_learning_module:
+                fragment = new LearningModuleFragment();
+                break;
         }
 
         if(fragment !=null){

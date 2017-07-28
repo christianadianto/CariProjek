@@ -4,6 +4,7 @@ package edu.bluejack16_2.cariprojek;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -32,6 +33,10 @@ public class CreateProjectFragment extends Fragment implements View.OnClickListe
     DatabaseReference myRef;
     SharedPreferences sharedPreferences;
     String email;
+
+    GPSTracker gpsTracker;
+    Location location;
+
     public CreateProjectFragment() {
         // Required empty public constructor
     }
@@ -55,6 +60,9 @@ public class CreateProjectFragment extends Fragment implements View.OnClickListe
 
         btnSubmit.setOnClickListener(this);
 
+        gpsTracker = new GPSTracker(getContext());
+
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -64,23 +72,27 @@ public class CreateProjectFragment extends Fragment implements View.OnClickListe
 
         if(v == btnSubmit){
 
+            location = gpsTracker.getLocation();
             String name = txtName.getText().toString();
             String category = spinnerCategory.getSelectedItem().toString();
             String description = txtDescription.getText().toString();
             int budget = Integer.parseInt(txtBudget.getText().toString());
             Long timestampLong = System.currentTimeMillis()/1000;
 
-            Project project = new Project(name, category, description, budget);
+            Project project = new Project(name, category, description, budget,location.getLatitude(),location.getLongitude());
 
             DatabaseReference new_project = myRef.push();
+            new_project.child("project").setValue(project);
             new_project.child("id").setValue(new_project.getKey());
-            new_project.child("email").setValue(email);
-            new_project.child("name").setValue(project.getName());
-            new_project.child("description").setValue(project.getDescription());
-            new_project.child("budget").setValue(project.getBudget());
-            new_project.child("category").setValue(project.getCategory());
-            new_project.child("status").setValue("Open");
-            new_project.child("timestamp").setValue(timestampLong.toString());
+//            new_project.child("email").setValue(email);
+//            new_project.child("name").setValue(project.getName());
+//            new_project.child("description").setValue(project.getDescription());
+//            new_project.child("budget").setValue(project.getBudget());
+//            new_project.child("category").setValue(project.getCategory());
+//            new_project.child("status").setValue("Open");
+//            new_project.child("latitude").setValue(project.getLatitude());
+//            new_project.child("longitude").setValue(project.getLongitude());
+//            new_project.child("timestamp").setValue(timestampLong.toString());
 
             Toast.makeText(getActivity(), "Success to create project", Toast.LENGTH_SHORT).show();
 
