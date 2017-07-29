@@ -1,4 +1,4 @@
-package edu.bluejack16_2.cariprojek;
+package edu.bluejack16_2.cariprojek.Models;
 
 /**
  * Created by chris on 07/11/2017.
@@ -6,6 +6,7 @@ package edu.bluejack16_2.cariprojek;
 
 public class Project {
 
+    private String owner;
     private String name;
     private String category;
     private String description;
@@ -16,36 +17,17 @@ public class Project {
     private double latitude;
     private double longitude;
 
-    public Project(String name, String category, String description, int budget, double latitude, double longitude) {
-        this.name = name;
-        this.category = category;
-        this.description = description;
-        this.budget = budget;
-        this.status = "Open";
-        Long timestampLong = System.currentTimeMillis()/1000;
-        this.timestamp = timestampLong.toString();
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
-    public Project(String name, String category, String description, int budget, String status, String created, String id, double latitude, double longitude){
-        this.name = name;
-        this.category = category;
-        this.description = description;
-        this.budget = budget;
-        this.status = status;
-        this.timestamp = created;
+    public Project(String id, String owner, String name, String category, String description, int budget, String status, String timestamp, double latitude, double longitude) {
         this.id = id;
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
-    public Project(String name, String category, String description, int budget, String status){
+        this.owner = owner;
         this.name = name;
         this.category = category;
         this.description = description;
         this.budget = budget;
         this.status = status;
+        this.timestamp = timestamp;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getId() {
@@ -118,5 +100,13 @@ public class Project {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

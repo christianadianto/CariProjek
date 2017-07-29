@@ -1,4 +1,4 @@
-package edu.bluejack16_2.cariprojek;
+package edu.bluejack16_2.cariprojek.Utilities;
 
 import android.Manifest;
 import android.app.Service;
@@ -62,7 +62,7 @@ public class GPSTracker extends Service implements LocationListener{
 
                 if(isGPSEnabled){
                     if(location==null){
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000,10,this);
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000,10,this);
                         if(locationManager!=null){
                             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                         }

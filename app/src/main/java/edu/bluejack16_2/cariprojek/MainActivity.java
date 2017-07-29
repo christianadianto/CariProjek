@@ -1,11 +1,13 @@
 package edu.bluejack16_2.cariprojek;
 
 import android.content.Intent;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import edu.bluejack16_2.cariprojek.Controllers.ProjectController;
+import edu.bluejack16_2.cariprojek.Controllers.UserController;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,7 +18,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ProjectController.getInstance();
+        UserController.getInstance();
+
+
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegis = (Button) findViewById(R.id.btnRegister);
         btnExit = (Button) findViewById(R.id.btnExit);

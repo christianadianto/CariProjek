@@ -7,20 +7,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import java.util.Vector;
+
+import edu.bluejack16_2.cariprojek.Controllers.ProjectController;
+import edu.bluejack16_2.cariprojek.Models.Project;
 
 
 /**
@@ -28,7 +24,8 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class MenuHomeFragment extends Fragment {
 
-    DatabaseReference myRef;
+//    DatabaseReference myRef;
+    Vector<Project> projects;
     SharedPreferences sharedPreferences;
     String email;
 
@@ -49,50 +46,57 @@ public class MenuHomeFragment extends Fragment {
         final ListView listView = (ListView) view.findViewById(R.id.listViewHome);
         final ListViewHomeAdapter listViewHomeAdapter = new ListViewHomeAdapter(getContext());
 
-        Query query = FirebaseDatabase.getInstance().getReference().child("Projects").orderByChild("timestamp");
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String name = "";
-                String category = "";
-                String description = "";
-                int budget = 0;
-                String status ="";
-                String timestamp = "";
-                String id = "";
-                double longitude=0;
-                double latitude=0;
+        projects = ProjectController.getProjects();
 
-
-                Log.e("DATASNAPHOT", "onDataChange: "+dataSnapshot );
-                if(dataSnapshot.getChildrenCount()!=0){
-                    for (DataSnapshot data:dataSnapshot.getChildren()) {
-
-                        name = data.child("project").child("name").getValue().toString();
-                        category = data.child("project").child("category").getValue().toString();
-                        description = data.child("project").child("description").getValue().toString();
-                        budget = Integer.parseInt(data.child("project").child("budget").getValue().toString());
-                        status = data.child("project").child("status").getValue().toString();
-                        timestamp = data.child("project").child("timestamp").getValue().toString();
-                        id = data.getKey();
-                        longitude = Double.parseDouble(data.child("project").child("longitude").getValue().toString());
-                        latitude = Double.parseDouble(data.child("project").child("latitude").getValue().toString());
-
-                        Project project = new Project(name, category, description, budget, status, timestamp, id, latitude, longitude);
-                        if (status.equals("Open")) {
-                            listViewHomeAdapter.add(project);
-                            listView.setAdapter(listViewHomeAdapter);
-                        }
-
-                    }
-                }
+        for (Project project:projects) {
+            if (project.getStatus().equals("Open")) {
+                listViewHomeAdapter.add(project);
+                listView.setAdapter(listViewHomeAdapter);
             }
+        }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        Query query = FirebaseDatabase.getInstance().getReference().child("Projects").orderByChild("timestamp");
+//        query.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                String name = "";
+//                String category = "";
+//                String description = "";
+//                int budget = 0;
+//                String status ="";
+//                String timestamp = "";
+//                String id = "";
+//                double longitude=0;
+//                double latitude=0;
+//
+//                if(dataSnapshot.getChildrenCount()!=0){
+//                    for (DataSnapshot data:dataSnapshot.getChildren()) {
+//
+//                        name = data.child("project").child("name").getValue().toString();
+//                        category = data.child("project").child("category").getValue().toString();
+//                        description = data.child("project").child("description").getValue().toString();
+//                        budget = Integer.parseInt(data.child("project").child("budget").getValue().toString());
+//                        status = data.child("project").child("status").getValue().toString();
+//                        timestamp = data.child("project").child("timestamp").getValue().toString();
+//                        id = data.getKey();
+//                        longitude = Double.parseDouble(data.child("project").child("longitude").getValue().toString());
+//                        latitude = Double.parseDouble(data.child("project").child("latitude").getValue().toString());
+//
+//                        Project project = new Project(name, category, description, budget, status, timestamp, id, latitude, longitude);
+//                        if (status.equals("Open")) {
+//                            listViewHomeAdapter.add(project);
+//                            listView.setAdapter(listViewHomeAdapter);
+//                        }
+//
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

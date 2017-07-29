@@ -18,11 +18,12 @@
         android:layout_alignParentStart="true" />
 
     <ListView
+        android:id="@+id/listViewReview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/tvID"
-        android:layout_marginTop="200dp"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginTop="200dp" />
 
     <RatingBar
         android:id="@+id/rbUser"
@@ -30,6 +31,25 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvID"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="20dp" />
+
+    <EditText
+        android:id="@+id/txtReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/rbUser"
+        android:layout_below="@+id/rbUser"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:layout_alignEnd="@+id/rbUser" />
+
+    <Button
+        android:id="@+id/btnSubmitReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtReview"
+        android:layout_centerHorizontal="true"
+        android:text="Submit" />
 
 </RelativeLayout>

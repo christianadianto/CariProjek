@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
+
+import edu.bluejack16_2.cariprojek.Models.Project;
 
 /**
  * Created by chris on 07/25/2017.

@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import edu.bluejack16_2.cariprojek.Models.Project;
+
 /**
  * Created by chris on 07/26/2017.
  */

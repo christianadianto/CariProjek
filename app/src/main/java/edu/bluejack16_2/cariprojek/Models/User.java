@@ -1,6 +1,4 @@
-package edu.bluejack16_2.cariprojek;
-
-import android.support.annotation.StringRes;
+package edu.bluejack16_2.cariprojek.Models;
 
 /**
  * Created by chris on 06/22/2017.
@@ -13,18 +11,15 @@ public class User {
     private String password;
     private String name;
     private String address;
-    private String phone;
+    private String phonenumber;
 
-    public User(){
-
-    }
-
-    public User(String email, String password, String name, String address, String phone) {
+    public User(String id, String email, String password, String name, String address, String phonenumber) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
         this.address = address;
-        this.phone = phone;
+        this.phonenumber = phonenumber;
     }
 
     public String getId() {
@@ -67,11 +62,11 @@ public class User {
         this.address = address;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhonenumber() {
+        return phonenumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
     }
 }
