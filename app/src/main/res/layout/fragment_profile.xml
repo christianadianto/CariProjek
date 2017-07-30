@@ -4,85 +4,98 @@
     android:layout_height="match_parent"
     tools:context="edu.bluejack16_2.cariprojek.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="My Profile"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:id="@+id/tvTitleProfile"
-        android:layout_marginTop="51dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:id="@+id/tvProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        android:layout_marginTop="19dp"
-        android:layout_below="@+id/tvTitleProfile"
-        android:layout_alignEnd="@+id/tvNameProfile" />
 
     <TextView
         android:id="@+id/tvNameProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
-        android:text="Name"
-        android:layout_below="@+id/tvEmailProfileContent"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:id="@+id/tvAddressProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:text="Address"
-        android:layout_below="@+id/tvNameProfile"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:id="@+id/tvPhoneProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Phone Number"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:id="@+id/tvEmailProfileContent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/tvProfile"
-        android:layout_alignStart="@+id/tvProfile" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorSecondaryDark"
+        android:textSize="20dp"
+        android:text="Name"/>
 
     <TextView
         android:id="@+id/tvNameProfileContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/tvNameProfile"
-        android:layout_alignStart="@+id/tvEmailProfileContent" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/tvNameProfile"
+        android:textColor="@color/colorSecondary"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="TextView"/>
+
+
+    <TextView
+        android:id="@+id/tvEmailProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/tvNameProfileContent"
+        android:textColor="@color/colorSecondaryDark"
+        android:textSize="20dp"
+        android:text="Email"/>
+
+    <TextView
+        android:id="@+id/tvEmailProfileContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/tvEmailProfile"
+        android:textColor="@color/colorSecondary"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/tvAddressProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/tvEmailProfileContent"
+        android:textColor="@color/colorSecondaryDark"
+        android:textSize="20dp"
+        android:text="Address"/>
 
     <TextView
         android:id="@+id/tvAddressProfileContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/tvAddressProfile"
-        android:layout_alignStart="@+id/tvNameProfileContent" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/tvAddressProfile"
+        android:textColor="@color/colorSecondary"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/tvPhoneProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/tvAddressProfileContent"
+        android:textColor="@color/colorSecondaryDark"
+        android:textSize="20dp"
+        android:text="Phone Number"/>
+
 
     <TextView
         android:id="@+id/tvPhoneProfileContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/tvPhoneProfile"
-        android:layout_alignParentStart="true" />
-
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/tvPhoneProfile"
+        android:textColor="@color/colorSecondary"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="TextView"/>
 
 </RelativeLayout>

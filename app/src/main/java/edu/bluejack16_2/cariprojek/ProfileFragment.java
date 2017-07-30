@@ -10,19 +10,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import edu.bluejack16_2.cariprojek.Models.User;
+import edu.bluejack16_2.cariprojek.Utilities.Session;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment {
 
-
     TextView tvEmail;
     TextView tvName;
     TextView tvAddress;
     TextView tvPhone;
-
-    SharedPreferences sharedPreferences;
+    Session session;
+    User user;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -40,18 +42,13 @@ public class ProfileFragment extends Fragment {
         tvAddress = (TextView) view.findViewById(R.id.tvAddressProfileContent);
         tvPhone = (TextView) view.findViewById(R.id.tvPhoneProfileContent);
 
-        sharedPreferences = this.getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        session = new Session(getContext());
+        user = session.getUser();
 
-        String email = sharedPreferences.getString("email","android.studio@android.com");
-        String name = sharedPreferences.getString("name","Android Studio");
-        String address = sharedPreferences.getString("address","-");
-        String phone = sharedPreferences.getString("phone","-");
-
-        tvEmail.setText(email);
-        tvName.setText(name);
-        tvAddress.setText(address);
-        tvPhone.setText(phone);
-
+        tvEmail.setText(user.getEmail());
+        tvName.setText(user.getName());
+        tvAddress.setText(user.getAddress());
+        tvPhone.setText(user.getPhonenumber());
 
         return  view;
     }

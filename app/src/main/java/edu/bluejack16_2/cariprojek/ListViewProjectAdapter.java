@@ -43,7 +43,7 @@ public class ListViewProjectAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(R.layout.data,parent,false);
+            convertView = inflater.inflate(R.layout.data_project_profile,parent,false);
         }
         TextView tvName = (TextView) convertView.findViewById(R.id.tvDataName);
         TextView tvBudget = (TextView) convertView.findViewById(R.id.tvDataBudget);
@@ -51,13 +51,35 @@ public class ListViewProjectAdapter extends BaseAdapter {
         TextView tvDescription = (TextView) convertView.findViewById(R.id.tvDataDescription);
         TextView tvStatus = (TextView) convertView.findViewById(R.id.tvDataStatus);
 
+        String category = minifyCategoryString(projects.get(position).getCategory());
+        String description = minifyDescriptionString(projects.get(position).getDescription());
+
         tvName.setText(projects.get(position).getName());
         tvBudget.setText(String.valueOf(projects.get(position).getBudget()));
-        tvCategory.setText(projects.get(position).getCategory());
-        tvDescription.setText(projects.get(position).getDescription());
+        tvCategory.setText(category);
+        tvDescription.setText(description);
         tvStatus.setText(projects.get(position).getStatus());
 
         return convertView;
+    }
+
+    private String minifyDescriptionString(String description){
+        if(description.length() > 50)
+            return description.substring(0, 48) + " ...";
+
+        return description;
+    }
+
+
+    private String minifyCategoryString(String category){
+
+        if(category.equals("C++") || category.equals("C#"))
+            return category;
+
+        else if(category.indexOf(" ") != -1)
+            return (""+category.charAt(0)+category.charAt(category.indexOf(" ")+1));
+
+        return (""+category.charAt(0)+category.charAt(1));
     }
 
     public void add(Project project){

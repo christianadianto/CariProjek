@@ -5,80 +5,79 @@
     tools:context="edu.bluejack16_2.cariprojek.CreateProjectFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
-        android:id="@+id/textName"
+        android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Poject Name"
-        android:layout_margin="10dp"/>
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textColor="@color/colorSecondary"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:text="Create"></TextView>
 
     <EditText
         android:id="@+id/txtName"
-        android:layout_width="wrap_content"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textName"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
-
-    <TextView
-        android:id="@+id/textCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Project Category"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/txtName" />
-
-    <Spinner
-        android:id="@+id/spinnerCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textCategory"
-        android:entries="@array/category_project"
-        android:layout_margin="10dp" />
-
-    <TextView
-        android:id="@+id/textDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Project Description"
-        android:layout_below="@+id/spinnerCategory"
-        android:layout_margin="10dp"/>
-
-    <EditText
-        android:id="@+id/txtDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:text="Name"
-        android:layout_below="@+id/textDescription" />
-
-    <TextView
-        android:id="@+id/textBudget"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Project Budget"
-        android:layout_below="@+id/txtDescription"
-        android:layout_margin="10dp"/>
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/tvTitle"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/round_edittext"
+        android:padding="8dp"
+        android:hint="Project Name"/>
 
     <EditText
         android:id="@+id/txtBudget"
-        android:layout_width="wrap_content"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textBudget"
-        android:ems="10"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/txtName"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/round_edittext"
+        android:padding="8dp"
         android:inputType="number"
-        android:text="" />
+        android:hint="Project Budget"/>
 
-    <Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/spinnerCategory"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textBudget"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/txtBudget"
-        android:layout_margin="10dp"
-        android:text="Create" />
+        android:layout_centerHorizontal="true"
+        android:padding="8dp"
+        android:entries="@array/category_project"/>
 
+    <EditText
+        android:id="@+id/txtDescription"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/spinnerCategory"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/round_edittext"
+        android:padding="8dp"
+        android:hint="Project Description"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/txtDescription">
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/round_button_secondary_color"
+            android:text="Create"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

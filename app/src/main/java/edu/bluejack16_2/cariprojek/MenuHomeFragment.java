@@ -17,6 +17,8 @@ import java.util.Vector;
 
 import edu.bluejack16_2.cariprojek.Controllers.ProjectController;
 import edu.bluejack16_2.cariprojek.Models.Project;
+import edu.bluejack16_2.cariprojek.Models.User;
+import edu.bluejack16_2.cariprojek.Utilities.Session;
 
 
 /**
@@ -24,15 +26,13 @@ import edu.bluejack16_2.cariprojek.Models.Project;
  */
 public class MenuHomeFragment extends Fragment {
 
-//    DatabaseReference myRef;
     Vector<Project> projects;
     SharedPreferences sharedPreferences;
-    String email;
+    User user;
+    Session session;
 
     public MenuHomeFragment() {
-        // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,70 +40,26 @@ public class MenuHomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_menu_home, container, false);
 
-        sharedPreferences = this.getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-        email = sharedPreferences.getString("email","android.studio@android.com");
-
         final ListView listView = (ListView) view.findViewById(R.id.listViewHome);
-        final ListViewHomeAdapter listViewHomeAdapter = new ListViewHomeAdapter(getContext());
+        final ListViewProjectAdapter listViewProjectAdapter = new ListViewProjectAdapter(getContext());
 
+        session = new Session(getContext());
+        user = session.getUser();
         projects = ProjectController.getProjects();
 
         for (Project project:projects) {
             if (project.getStatus().equals("Open")) {
-                listViewHomeAdapter.add(project);
-                listView.setAdapter(listViewHomeAdapter);
+                listViewProjectAdapter.add(project);
+                listView.setAdapter(listViewProjectAdapter);
             }
         }
-
-//        Query query = FirebaseDatabase.getInstance().getReference().child("Projects").orderByChild("timestamp");
-//        query.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                String name = "";
-//                String category = "";
-//                String description = "";
-//                int budget = 0;
-//                String status ="";
-//                String timestamp = "";
-//                String id = "";
-//                double longitude=0;
-//                double latitude=0;
-//
-//                if(dataSnapshot.getChildrenCount()!=0){
-//                    for (DataSnapshot data:dataSnapshot.getChildren()) {
-//
-//                        name = data.child("project").child("name").getValue().toString();
-//                        category = data.child("project").child("category").getValue().toString();
-//                        description = data.child("project").child("description").getValue().toString();
-//                        budget = Integer.parseInt(data.child("project").child("budget").getValue().toString());
-//                        status = data.child("project").child("status").getValue().toString();
-//                        timestamp = data.child("project").child("timestamp").getValue().toString();
-//                        id = data.getKey();
-//                        longitude = Double.parseDouble(data.child("project").child("longitude").getValue().toString());
-//                        latitude = Double.parseDouble(data.child("project").child("latitude").getValue().toString());
-//
-//                        Project project = new Project(name, category, description, budget, status, timestamp, id, latitude, longitude);
-//                        if (status.equals("Open")) {
-//                            listViewHomeAdapter.add(project);
-//                            listView.setAdapter(listViewHomeAdapter);
-//                        }
-//
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                Toast.makeText(getContext(), listViewHomeAdapter.getItem(position).toString(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), ProjectReviewActivity.class);
-                intent.putExtra("ID",listViewHomeAdapter.getItem(position).toString());
+                intent.putExtra("ID",listViewProjectAdapter.getItem(position).toString());
                 startActivity(intent);
             }
         });

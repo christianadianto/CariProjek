@@ -10,13 +10,11 @@
         android:id="@+id/gridProject"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="51dp"
         android:visibility="visible"
         android:numColumns="auto_fit"
         android:horizontalSpacing="10dp"
         android:verticalSpacing="10dp"
         android:columnWidth="120dp"
         android:stretchMode="spacingWidthUniform"/>
+
 </RelativeLayout>

@@ -33,16 +33,6 @@ public class ProjectController {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String name = "";
-                String category = "";
-                String description = "";
-                int budget = 0;
-                String status ="";
-                String timestamp = "";
-                String id = "";
-                double longitude=0;
-                double latitude=0;
-
                 if(dataSnapshot.getChildrenCount()!=0){
                     projects.clear();
                     for (DataSnapshot data:dataSnapshot.getChildren()) {
@@ -96,7 +86,7 @@ public class ProjectController {
         for (Project project:projects) {
             if(project.getOwner().equals(email)){
                 filtered_projects.add(project);
-            }
+               }
         }
 
         return filtered_projects;
