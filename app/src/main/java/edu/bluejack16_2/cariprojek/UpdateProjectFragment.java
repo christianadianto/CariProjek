@@ -53,7 +53,6 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
 
     Button btnUpdate;
     Button btnDelete;
-    DatabaseReference databaseReference;
 
     public UpdateProjectFragment() {
         // Required empty public constructor
@@ -93,7 +92,6 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
     }
 
     private void setProjectList() {
-
         if(projects.size() == 0){
             toggleForm(false);
             projectNames.add("You don't have any projects");
@@ -124,7 +122,6 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
         txtBudget.setEnabled(bool);
         cbStatus.setEnabled(bool);
         spinnerCategory.setEnabled(bool);
-//        spinnerProject.setEnabled(bool);
         toggleButton(bool);
     }
 

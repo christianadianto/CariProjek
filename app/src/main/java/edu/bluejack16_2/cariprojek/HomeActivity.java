@@ -28,6 +28,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import edu.bluejack16_2.cariprojek.Models.User;
+import edu.bluejack16_2.cariprojek.Utilities.Session;
+
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -35,6 +38,7 @@ public class HomeActivity extends AppCompatActivity
     DatabaseReference databaseUsers;
     TextView tvName;
     TextView tvEmail;
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,8 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Session session = new Session(getApplicationContext());
+        user = session.getUser();
         NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
         View hView = navView.getHeaderView(0);
         tvEmail = (TextView) hView.findViewById(R.id.user_email);
@@ -51,15 +57,6 @@ public class HomeActivity extends AppCompatActivity
 
         setEmail_UserName();
 
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -74,8 +71,8 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void setEmail_UserName() {
-        String email = sharedPreferences.getString("email","android.studio@android.com");
-        String name = sharedPreferences.getString("name","Android Studio");
+        String email = user.getEmail();
+        String name = user.getName();
 
         tvEmail.setText(email);
         tvName.setText(name);
@@ -111,9 +108,6 @@ public class HomeActivity extends AppCompatActivity
             editor.clear();
             editor.commit();
             finish();
-
-//            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-//            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -154,6 +148,13 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_learning_module:
                 fragment = new LearningModuleFragment();
                 break;
+            case R.id.nav_insert_portofolio:
+                fragment = new CreatePortofolioFragment();
+                break;
+            case R.id.nav_update_portofolio:
+                fragment = new UpdatePortofolioFragment();
+                break;
+
         }
 
         if(fragment !=null){

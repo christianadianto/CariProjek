@@ -7,7 +7,14 @@
     <!-- TODO: Update blank fragment layout -->
 
     <ListView
+        android:layout_marginTop="50dp"
         android:id="@+id/listViewHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <Spinner
+        android:id="@+id/spCategoryHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/category_project"/>
 </FrameLayout>

@@ -28,6 +28,16 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Learning Module"
         />
+        <item
+            android:id="@+id/nav_insert_portofolio"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Insert Portofolio"
+            />
+        <item
+            android:id="@+id/nav_update_portofolio"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Update Portofolio"
+            />
     </group>
 
     <!--<item android:title="Communicate">-->
