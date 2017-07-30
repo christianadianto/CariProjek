@@ -22,6 +22,10 @@ public class ListViewModuleAdapter extends BaseAdapter {
         this.context = context;
     }
 
+    public void addTitle(String title){
+        titleModules.add(title);
+    }
+
     @Override
     public int getCount() {
         return titleModules.size();

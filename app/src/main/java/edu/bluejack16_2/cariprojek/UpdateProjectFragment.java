@@ -124,7 +124,7 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
         txtBudget.setEnabled(bool);
         cbStatus.setEnabled(bool);
         spinnerCategory.setEnabled(bool);
-        spinnerProject.setEnabled(bool);
+//        spinnerProject.setEnabled(bool);
         toggleButton(bool);
     }
 
