@@ -58,7 +58,9 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".ProjectReviewActivity" />
-        <activity android:name=".DetailModuleActivity"></activity>
+        <activity android:name=".DetailModuleActivity" />
+        <activity android:name=".ProjectDetailActivity" />
+        <activity android:name=".RoomChatActivity"></activity>
     </application>
 
 </manifest>

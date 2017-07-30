@@ -27,9 +27,6 @@ import edu.bluejack16_2.cariprojek.Utilities.Session;
  */
 public class ProfileCreateProjectFragment extends Fragment {
 
-    DatabaseReference myRef;
-    SharedPreferences sharedPreferences;
-    String email;
     Vector<Project> projects;
     Session session;
     User user;
@@ -45,7 +42,7 @@ public class ProfileCreateProjectFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_profile_create_project, container, false);
 
-        final ListView listView = (ListView) view.findViewById(R.id.listViewProject);
+        ListView listView = (ListView) view.findViewById(R.id.listViewProject);
         final ListViewProjectAdapter listViewProjectAdapter = new ListViewProjectAdapter(getContext());
 
         session = new Session(getContext());
@@ -60,9 +57,9 @@ public class ProfileCreateProjectFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(getContext(), listViewHomeAdapter.getItem(position).toString(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), ProjectReviewActivity.class);
-                intent.putExtra("ID",listViewProjectAdapter.getItem(position).toString());
+                Intent intent = new Intent(getActivity(), RoomChatActivity.class);
+                Project project = (Project) listViewProjectAdapter.getItem(position);
+                intent.putExtra("projectId", project.getId());
                 startActivity(intent);
             }
         });

@@ -57,9 +57,9 @@ public class MenuHomeFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getContext(), listViewHomeAdapter.getItem(position).toString(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), ProjectReviewActivity.class);
-                intent.putExtra("ID",listViewProjectAdapter.getItem(position).toString());
+                Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
+                Project project = (Project) listViewProjectAdapter.getItem(position);
+                intent.putExtra("projectId", project.getId());
                 startActivity(intent);
             }
         });
@@ -68,9 +68,7 @@ public class MenuHomeFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 projects = ProjectController.getProjectByCategory(spCategory.getSelectedItem().toString());
-
                 getProject();
-                Toast.makeText(getContext(), "testing jalan ga", Toast.LENGTH_SHORT).show();
             }
 
             @Override

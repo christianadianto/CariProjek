@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import edu.bluejack16_2.cariprojek.Controllers.ProjectController;
 import edu.bluejack16_2.cariprojek.Models.Project;
 
 /**
@@ -32,7 +33,7 @@ public class ListViewProjectAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return projects.get(position).getId();
+        return projects.get(position);
     }
 
     @Override
@@ -52,8 +53,8 @@ public class ListViewProjectAdapter extends BaseAdapter {
         TextView tvDescription = (TextView) convertView.findViewById(R.id.tvDataDescription);
         TextView tvStatus = (TextView) convertView.findViewById(R.id.tvDataStatus);
 
-        String category = minifyCategoryString(projects.get(position).getCategory());
-        String description = minifyDescriptionString(projects.get(position).getDescription());
+        String category = ProjectController.minifyCategoryString(projects.get(position).getCategory());
+        String description = ProjectController.minifyDescriptionString(projects.get(position).getDescription());
 
         tvName.setText(projects.get(position).getName());
         tvBudget.setText(String.valueOf(projects.get(position).getBudget()));
@@ -62,25 +63,6 @@ public class ListViewProjectAdapter extends BaseAdapter {
         tvStatus.setText(projects.get(position).getStatus());
 
         return convertView;
-    }
-
-    private String minifyDescriptionString(String description){
-        if(description.length() > 50)
-            return description.substring(0, 48) + " ...";
-
-        return description;
-    }
-
-
-    private String minifyCategoryString(String category){
-
-        if(category.equals("C++") || category.equals("C#"))
-            return category;
-
-        else if(category.indexOf(" ") != -1)
-            return (""+category.charAt(0)+category.charAt(category.indexOf(" ")+1));
-
-        return (""+category.charAt(0)+category.charAt(1));
     }
 
     public void add(Project project){

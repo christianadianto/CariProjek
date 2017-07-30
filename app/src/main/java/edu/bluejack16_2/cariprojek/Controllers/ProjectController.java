@@ -19,6 +19,9 @@ import edu.bluejack16_2.cariprojek.Models.Project;
 
 public class ProjectController {
 
+    private static final String OPEN = "Open";
+    private static final String CLOSED = "Closed";
+
     private static ProjectController instance;
     private static Vector<Project> projects;
     Query query;
@@ -79,6 +82,14 @@ public class ProjectController {
         return projects;
     }
 
+    public static Project getProjectById(String projectId){
+        for (Project project:projects) {
+             if(project.getId().equals(projectId))
+                 return project;
+        }
+        return null;
+    }
+
     public static Vector<Project> getProjectByCategory(String category){
 
         Vector<Project> filtered_projects = new Vector<>();
@@ -115,9 +126,9 @@ public class ProjectController {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Projects");
 
-        DatabaseReference new_user = myRef.push();
-        project.setId(new_user.getKey());
-        new_user.child("project").setValue(project);
+        DatabaseReference new_project = myRef.push();
+        project.setId(new_project.getKey());
+        new_project.child("project").setValue(project);
 
     }
 
@@ -134,4 +145,36 @@ public class ProjectController {
     }
 
 
+    public static String minifyDescriptionString(String description){
+        if(description.length() > 50)
+            return description.substring(0, 48) + " ...";
+
+        return description;
+    }
+
+
+    public static String minifyCategoryString(String category){
+
+        if(category.equals("C++") || category.equals("C#"))
+            return category;
+
+        else if(category.indexOf(" ") != -1)
+            return (""+category.charAt(0)+category.charAt(category.indexOf(" ")+1));
+
+        return (""+category.charAt(0)+category.charAt(1));
+    }
+
+
+    public static Vector<Project> getWorkedProjectByEmail(String email) {
+
+        Vector<Project> filtered_projects = new Vector<>();
+
+        for (Project project:projects) {
+            if(project.getStatus().equals(ProjectController.OPEN))
+                if(ProjectDetailController.isUserCurrentProject(project.getId(), email))
+                    filtered_projects.add(project);
+        }
+
+        return filtered_projects;
+    }
 }

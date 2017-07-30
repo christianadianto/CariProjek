@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,15 +6,19 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ListView
-        android:layout_marginTop="50dp"
-        android:id="@+id/listViewHome"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <Spinner
         android:id="@+id/spCategoryHome"
-        android:layout_width="match_parent"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
         android:entries="@array/search_category"/>
-</FrameLayout>
+
+    <ListView
+        android:id="@+id/listViewHome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/spCategoryHome"/>
+
+</RelativeLayout>

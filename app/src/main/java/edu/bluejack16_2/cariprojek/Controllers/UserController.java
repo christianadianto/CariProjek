@@ -1,5 +1,7 @@
 package edu.bluejack16_2.cariprojek.Controllers;
 
+import android.util.Log;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -9,6 +11,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Vector;
 
+import edu.bluejack16_2.cariprojek.Models.ProjectDetail;
 import edu.bluejack16_2.cariprojek.Models.User;
 
 /**
@@ -30,7 +33,6 @@ public class UserController {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                int i = 0;
                 if(dataSnapshot.getChildrenCount()!=0){
                     users.clear();
                     for (DataSnapshot data:dataSnapshot.getChildren()) {
@@ -111,6 +113,36 @@ public class UserController {
         }
         return null;
     }
+
+
+    public static Vector<User> getUserByProject(String projectId){
+
+        Vector<User> users = new Vector<>();
+        Vector<ProjectDetail> projectDetails = ProjectDetailController.getProjectDetails();
+
+        for (ProjectDetail projectDetail:projectDetails) {
+            if(projectDetail.getProjectId().equals(projectId)){
+                User user = getUserByEmail(projectDetail.getUserEmail());
+                users.add(user);
+            }
+        }
+
+        return users;
+    }
+
+    public static User getChoosenUser(String projectId){
+
+        Vector<ProjectDetail> projectDetails = ProjectDetailController.getProjectDetails();
+
+        for (ProjectDetail projectDetail:projectDetails) {
+            if(projectDetail.getProjectId().equals(projectId) && projectDetail.getStatus().equals(ProjectDetailController.CHOOSEN)){
+                return getUserByEmail(projectDetail.getUserEmail());
+            }
+        }
+
+        return null;
+    }
+
 
     public static boolean userAuth(String email, String password){
         for (User user:users) {

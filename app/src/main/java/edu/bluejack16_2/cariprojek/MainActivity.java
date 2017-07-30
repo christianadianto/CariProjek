@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import edu.bluejack16_2.cariprojek.Controllers.ChatRoomController;
 import edu.bluejack16_2.cariprojek.Controllers.PortofolioController;
 import edu.bluejack16_2.cariprojek.Controllers.ProjectController;
+import edu.bluejack16_2.cariprojek.Controllers.ProjectDetailController;
 import edu.bluejack16_2.cariprojek.Controllers.UserController;
 import edu.bluejack16_2.cariprojek.Models.Portofolio;
 
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         ProjectController.getInstance();
         PortofolioController.getInstance();
         UserController.getInstance();
+        ProjectDetailController.getInstance();
+        ChatRoomController.getInstance();
 
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegis = (Button) findViewById(R.id.btnRegister);
