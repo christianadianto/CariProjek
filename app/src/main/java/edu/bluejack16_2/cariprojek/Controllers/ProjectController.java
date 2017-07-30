@@ -79,6 +79,25 @@ public class ProjectController {
         return projects;
     }
 
+    public static Vector<Project> getProjectByCategory(String category){
+
+        Vector<Project> filtered_projects = new Vector<>();
+
+        for (Project project:projects) {
+            if(project.getStatus().equals("Closed")){
+                continue;
+            }
+            if(category.equals("All")){
+                filtered_projects.add(project);
+            }
+            else if(project.getCategory().equals(category)){
+                filtered_projects.add(project);
+            }
+        }
+
+        return filtered_projects;
+    }
+
     public static Vector<Project> getProjectByEmail(String email){
 
         Vector<Project> filtered_projects = new Vector<>();

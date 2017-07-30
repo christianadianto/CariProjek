@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.Vector;
 
@@ -30,6 +32,9 @@ public class MenuHomeFragment extends Fragment {
     SharedPreferences sharedPreferences;
     User user;
     Session session;
+    Spinner spCategory;
+    ListView listView;
+    ListViewProjectAdapter listViewProjectAdapter;
 
     public MenuHomeFragment() {
     }
@@ -40,19 +45,14 @@ public class MenuHomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_menu_home, container, false);
 
-        final ListView listView = (ListView) view.findViewById(R.id.listViewHome);
-        final ListViewProjectAdapter listViewProjectAdapter = new ListViewProjectAdapter(getContext());
+        listView = (ListView) view.findViewById(R.id.listViewHome);
+        listViewProjectAdapter = new ListViewProjectAdapter(getContext());
+        spCategory = (Spinner) view.findViewById(R.id.spCategoryHome);
 
         session = new Session(getContext());
         user = session.getUser();
         projects = ProjectController.getProjects();
-
-        for (Project project:projects) {
-            if (project.getStatus().equals("Open")) {
-                listViewProjectAdapter.add(project);
-                listView.setAdapter(listViewProjectAdapter);
-            }
-        }
+        listView.setAdapter(listViewProjectAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -64,13 +64,30 @@ public class MenuHomeFragment extends Fragment {
             }
         });
 
+        spCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                projects = ProjectController.getProjectByCategory(spCategory.getSelectedItem().toString());
 
+                getProject();
+                Toast.makeText(getContext(), "testing jalan ga", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         return view;
+    }
+
+    public void getProject(){
+        listViewProjectAdapter.refresh(projects);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Cari Project");
+        getActivity().setTitle("Cari Project ");
     }
 }

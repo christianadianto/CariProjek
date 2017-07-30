@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 import edu.bluejack16_2.cariprojek.Models.Project;
 
@@ -16,11 +17,11 @@ import edu.bluejack16_2.cariprojek.Models.Project;
  */
 
 public class ListViewProjectAdapter extends BaseAdapter {
-    ArrayList<Project> projects;
+    Vector<Project> projects;
     Context context;
 
     public ListViewProjectAdapter(Context context) {
-        projects = new ArrayList<Project>();
+        projects = new Vector<>();
         this.context = context;
     }
 
@@ -84,6 +85,11 @@ public class ListViewProjectAdapter extends BaseAdapter {
 
     public void add(Project project){
         projects.add(project);
+    }
+
+    public void refresh(Vector<Project>projects){
+        this.projects = projects;
+        this.notifyDataSetChanged();
     }
 
 }

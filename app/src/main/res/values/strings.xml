@@ -24,6 +24,15 @@
         <item>Web Design</item>
         <item>Web Programming</item>
     </string-array>
+    <string-array name="search_category">
+        <item>All</item>
+        <item>C++</item>
+        <item>C#</item>
+        <item>Ruby</item>
+        <item>Python</item>
+        <item>Web Design</item>
+        <item>Web Programming</item>
+    </string-array>
 
 
 </resources>
