@@ -1,11 +1,13 @@
 package edu.bluejack16_2.cariprojek;
 
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,8 +86,18 @@ public class CreateProjectFragment extends Fragment implements View.OnClickListe
             ProjectController.insertProject(project);
 
             Toast.makeText(getActivity(), "Success to create project", Toast.LENGTH_SHORT).show();
+            showNotif(getView(),name);
 
         }
 
+    }
+
+    private void showNotif(View v,String name) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext());
+        builder.setSmallIcon(R.drawable.ic_menu_send);
+        builder.setContentTitle("Success Create Project");
+        builder.setContentText(name+" is created");
+        NotificationManager nm = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.notify(0,builder.build());
     }
 }
