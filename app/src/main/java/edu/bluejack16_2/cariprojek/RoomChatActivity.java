@@ -93,6 +93,7 @@ public class RoomChatActivity extends AppCompatActivity implements View.OnClickL
             ChatRoomController.insertChat(chatRoom.getId(), chat);
             chats.add(chat);
             refreshChat();
+            txtMessage.setText("");
         }
     }
 

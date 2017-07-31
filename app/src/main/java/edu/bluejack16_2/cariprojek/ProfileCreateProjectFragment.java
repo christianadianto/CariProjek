@@ -57,7 +57,7 @@ public class ProfileCreateProjectFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), RoomChatActivity.class);
+                Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
                 Project project = (Project) listViewProjectAdapter.getItem(position);
                 intent.putExtra("projectId", project.getId());
                 startActivity(intent);

@@ -103,6 +103,7 @@ public class ProjectDetailActivity extends AppCompatActivity implements View.OnC
         layoutButton = (LinearLayout) findViewById(R.id.buttonSection);
 
         btnJoin.setOnClickListener(this);
+        btnChat.setOnClickListener(this);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -246,6 +247,11 @@ public class ProjectDetailActivity extends AppCompatActivity implements View.OnC
         }
 
         if(view == btnChat){
+            Toast.makeText(this, "btnChat", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), RoomChatActivity.class);
+            //Project project = (Project) listViewProjectAdapter.getItem(position);
+            intent.putExtra("projectId", project.getId());
+            startActivity(intent);
         }
     }
 
