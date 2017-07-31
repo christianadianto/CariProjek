@@ -58,7 +58,7 @@ public class RateController {
     private Rate createRate(DataSnapshot data){
         String id = data.getKey();
         String userId = getChild(data, "userId");
-        int rate = Integer.parseInt(getChild(data, "rate"));
+        float rate = Float.parseFloat(getChild(data, "rate"));
 
         return new Rate(id, userId, rate);
     }

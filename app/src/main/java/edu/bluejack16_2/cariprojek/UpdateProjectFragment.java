@@ -2,6 +2,7 @@ package edu.bluejack16_2.cariprojek;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -194,6 +195,10 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
 
                 rateReminder = new RateReminder("", projectManager.getId(), user.getId());
                 RateReminderController.insertRateReminder(rateReminder);
+
+                Intent intent = new Intent(getActivity(), ProjectReviewActivity .class);
+                intent.putExtra("projectId", projectDetail.getProjectId());
+                startActivity(intent);
             }
 
             getProjectList();

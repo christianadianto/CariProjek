@@ -26,7 +26,7 @@ public class RateReminderController {
 
     private RateReminderController(){
         rateReminders = new Vector<>();
-        query = FirebaseDatabase.getInstance().getReference().child("Rates");
+        query = FirebaseDatabase.getInstance().getReference().child("RateReminders");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -63,21 +63,39 @@ public class RateReminderController {
     }
 
     private String getChild(DataSnapshot data, String key){
-        return data.child("rate").child(key).getValue().toString();
+        return data.child("rateReminder").child(key).getValue().toString();
     }
 
     public static Vector<RateReminder> getRateReminders(){
         return rateReminders;
     }
 
+    public static RateReminder getRateReminder(String raterId, String ratedId){
+        for (RateReminder rateReminder:rateReminders) {
+            if(rateReminder.getRaterUserId().equals(raterId)
+                    && rateReminder.getRatedUserId().equals(ratedId))
+                return rateReminder;
+        }
+
+        return null;
+    }
+
     public static void insertRateReminder(RateReminder rateReminder){
 
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Rates");
+        myRef = database.getReference("RateReminders");
 
         DatabaseReference new_rate = myRef.push();
         rateReminder.setId(new_rate.getKey());
-        new_rate.child("rate").setValue(rateReminder);
+        new_rate.child("rateReminder").setValue(rateReminder);
+
+    }
+
+    public static void removeRateReminder(String rateReminderId){
+
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("RateReminders").child(rateReminderId);
+        myRef.removeValue();
 
     }
 

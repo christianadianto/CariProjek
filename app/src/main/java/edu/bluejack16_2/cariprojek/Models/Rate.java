@@ -8,9 +8,9 @@ public class Rate {
 
     private String id;
     private String userId;
-    private int rate;
+    private float rate;
 
-    public Rate(String id, String userId, int rate) {
+    public Rate(String id, String userId, float rate) {
         this.id = id;
         this.userId = userId;
         this.rate = rate;
@@ -32,11 +32,11 @@ public class Rate {
         this.userId = userId;
     }
 
-    public int getRate() {
+    public float getRate() {
         return rate;
     }
 
-    public void setRate(int rate) {
+    public void setRate(float rate) {
         this.rate = rate;
     }
 }
