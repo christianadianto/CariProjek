@@ -47,6 +47,10 @@ public class AddProgressActivity extends AppCompatActivity implements View.OnCli
 
         projects = ProjectController.getWorkedProjectByEmail(user.getEmail());
         projectNames = new Vector<>();
+        setProjectList();
+
+        btnSubmit.setOnClickListener(this);
+
     }
 
     private void init(){
