@@ -88,6 +88,15 @@ public class ProjectDetailController {
         new_projectDetail.child("projectDetail").setValue(projectDetail);
     }
 
+    public static ProjectDetail getProjectDetailByProjectId(String projectId) {
+        for (ProjectDetail projectDetail : projectDetails) {
+            if (projectDetail.getProjectId().equals(projectId))
+                return projectDetail;
+        }
+
+        return null;
+    }
+
     public static void updateProjectDetail(String projectId, String userEmail){
 
         ProjectDetail pd = new ProjectDetail("", "", "", "");
@@ -111,6 +120,16 @@ public class ProjectDetailController {
             if(projectDetail.getProjectId().equals(projectId)
                     && projectDetail.getUserEmail().equals(userEmail)
                     && projectDetail.getStatus().equals(ProjectDetailController.CHOOSEN))
+                return true;
+        }
+
+        return false;
+    }
+
+    public static boolean haveProjectDetail(String projectId){
+
+        for (ProjectDetail projectDetail:projectDetails) {
+            if(projectDetail.getProjectId().equals(projectId))
                 return true;
         }
 

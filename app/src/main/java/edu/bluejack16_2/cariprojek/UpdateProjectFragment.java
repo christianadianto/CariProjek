@@ -25,7 +25,13 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import edu.bluejack16_2.cariprojek.Controllers.ProjectController;
+import edu.bluejack16_2.cariprojek.Controllers.ProjectDetailController;
+import edu.bluejack16_2.cariprojek.Controllers.RateController;
+import edu.bluejack16_2.cariprojek.Controllers.RateReminderController;
+import edu.bluejack16_2.cariprojek.Controllers.UserController;
 import edu.bluejack16_2.cariprojek.Models.Project;
+import edu.bluejack16_2.cariprojek.Models.ProjectDetail;
+import edu.bluejack16_2.cariprojek.Models.RateReminder;
 import edu.bluejack16_2.cariprojek.Models.User;
 import edu.bluejack16_2.cariprojek.Utilities.Session;
 
@@ -178,6 +184,18 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
             selectedProject.setTimestamp(timestamp);
 
             ProjectController.updateProject(selectedProject);
+
+            if(ProjectDetailController.getProjectDetailByProjectId(selectedProject.getId()) != null) {
+                ProjectDetail projectDetail = ProjectDetailController.getProjectDetailByProjectId(selectedProject.getId());
+                User projectManager = UserController.getUserByEmail(projectDetail.getUserEmail());
+
+                RateReminder rateReminder = new RateReminder("", user.getId(), projectManager.getId());
+                RateReminderController.insertRateReminder(rateReminder);
+
+                rateReminder = new RateReminder("", projectManager.getId(), user.getId());
+                RateReminderController.insertRateReminder(rateReminder);
+            }
+
             getProjectList();
         }
         else if(v == btnDelete){

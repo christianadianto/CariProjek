@@ -10,6 +10,8 @@ import edu.bluejack16_2.cariprojek.Controllers.ChatRoomController;
 import edu.bluejack16_2.cariprojek.Controllers.PortofolioController;
 import edu.bluejack16_2.cariprojek.Controllers.ProjectController;
 import edu.bluejack16_2.cariprojek.Controllers.ProjectDetailController;
+import edu.bluejack16_2.cariprojek.Controllers.RateController;
+import edu.bluejack16_2.cariprojek.Controllers.RateReminderController;
 import edu.bluejack16_2.cariprojek.Controllers.UserController;
 import edu.bluejack16_2.cariprojek.Models.Portofolio;
 
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         UserController.getInstance();
         ProjectDetailController.getInstance();
         ChatRoomController.getInstance();
+        RateController.getInstance();
+        RateReminderController.getInstance();
 
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegis = (Button) findViewById(R.id.btnRegister);
