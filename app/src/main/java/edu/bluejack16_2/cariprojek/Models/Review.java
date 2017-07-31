@@ -7,12 +7,14 @@ package edu.bluejack16_2.cariprojek.Models;
 public class Review {
 
     private String id;
-    private String userFromName;
+    private String userToEmail;
+    private String userFromEmail;
     private String reviewMessage;
 
-    public Review(String id, String userFromName, String reviewMessage) {
+    public Review(String id, String userToEmail, String userFromEmail, String reviewMessage) {
         this.id = id;
-        this.userFromName = userFromName;
+        this.userToEmail = userToEmail;
+        this.userFromEmail = userFromEmail;
         this.reviewMessage = reviewMessage;
     }
 
@@ -24,12 +26,20 @@ public class Review {
         this.id = id;
     }
 
-    public String getUserFromName() {
-        return userFromName;
+    public String getUserToEmail() {
+        return userToEmail;
     }
 
-    public void setUserFromName(String userFromName) {
-        this.userFromName = userFromName;
+    public void setUserToEmail(String userToEmail) {
+        this.userToEmail = userToEmail;
+    }
+
+    public String getUserFromEmail() {
+        return userFromEmail;
+    }
+
+    public void setUserFromEmail(String userFromEmail) {
+        this.userFromEmail = userFromEmail;
     }
 
     public String getReviewMessage() {

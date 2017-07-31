@@ -29,7 +29,7 @@ public class ReviewController {
 
     private ReviewController(){
         reviews = new Vector<>();
-        query = FirebaseDatabase.getInstance().getReference().child("Projects");
+        query = FirebaseDatabase.getInstance().getReference().child("Reviews");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -37,8 +37,8 @@ public class ReviewController {
                 if(dataSnapshot.getChildrenCount()!=0){
                     reviews.clear();
                     for (DataSnapshot data:dataSnapshot.getChildren()) {
-                        //Review review = createReview(data);
-                        //reviews.add(review);
+                        Review review = createReview(data);
+                        reviews.add(review);
                     }
                 }
             }
@@ -57,27 +57,41 @@ public class ReviewController {
         return instance;
     }
 
-//    private Review createReview(DataSnapshot data){
-//        String id = data.getKey();
-//        String owner = getChild(data, "owner");
-//        String name = getChild(data, "name");
-//        String category = getChild(data, "category");
-//        String description = getChild(data, "description");
-//        int budget = Integer.parseInt(getChild(data, "budget"));
-//        String status = getChild(data, "status");
-//        String timestamp = getChild(data, "timestamp");
-//        double latitude = Double.parseDouble(getChild(data, "latitude"));
-//        double longitude = Double.parseDouble(getChild(data, "longitude"));
-//
-//        return new Project(id, owner, name, category, description, budget, status, timestamp, latitude, longitude);
-//    }
-//
-//    private String getChild(DataSnapshot data, String key){
-//        return data.child("project").child(key).getValue().toString();
-//    }
-//
-//    public static Vector<Project> getReviews(){
-//        return reviews;
-//    }
+    private Review createReview(DataSnapshot data){
+        String id = data.getKey();
+        String userToEmail = getChild(data, "userToName");
+        String userFromEmail = getChild(data, "userFromName");
+        String reviewMessage = getChild(data, "reviewMessage");
+
+        return new Review(id, userToEmail, userFromEmail, reviewMessage);
+    }
+
+    private String getChild(DataSnapshot data, String key){
+        return data.child("review").child(key).getValue().toString();
+    }
+
+    public static Vector<Review> getReviews(){
+        return reviews;
+    }
+
+    public static Vector<Review> getReviewsByUserEmail(String userEmail){
+
+        Vector<Review> filtered_reviews = new Vector<>();
+        for (Review review:reviews) {
+            if(review.getUserToEmail().equals(userEmail))
+                filtered_reviews.add(review);
+        }
+
+        return filtered_reviews;
+    }
+
+    public static void insertReview (Review review){
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Reviews");
+
+        DatabaseReference new_review = myRef.push();
+        review.setId(new_review.getKey());
+        new_review.child("review").setValue(review);
+    }
 
 }

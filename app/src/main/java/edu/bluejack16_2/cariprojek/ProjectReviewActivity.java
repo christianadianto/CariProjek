@@ -13,11 +13,13 @@ import android.widget.Toast;
 import edu.bluejack16_2.cariprojek.Controllers.ProjectDetailController;
 import edu.bluejack16_2.cariprojek.Controllers.RateController;
 import edu.bluejack16_2.cariprojek.Controllers.RateReminderController;
+import edu.bluejack16_2.cariprojek.Controllers.ReviewController;
 import edu.bluejack16_2.cariprojek.Controllers.UserController;
 import edu.bluejack16_2.cariprojek.Models.Project;
 import edu.bluejack16_2.cariprojek.Models.ProjectDetail;
 import edu.bluejack16_2.cariprojek.Models.Rate;
 import edu.bluejack16_2.cariprojek.Models.RateReminder;
+import edu.bluejack16_2.cariprojek.Models.Review;
 import edu.bluejack16_2.cariprojek.Models.User;
 import edu.bluejack16_2.cariprojek.Utilities.Session;
 
@@ -83,6 +85,9 @@ public class ProjectReviewActivity extends AppCompatActivity implements View.OnC
 
             RateReminder rateReminder = RateReminderController.getRateReminder(user.getId(), userTarget.getId());
             RateReminderController.removeRateReminder(rateReminder.getId());
+
+            Review review = new Review("", userTarget.getEmail(),user.getEmail(), txtReview.getText().toString());
+            ReviewController.insertReview(review);
 
             Toast.makeText(this, "Success Insert Review", Toast.LENGTH_SHORT).show();
         }

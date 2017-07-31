@@ -98,24 +98,33 @@
         android:textStyle="bold"
         android:text="TextView"/>
 
-    <Button
-        android:id="@+id/btnViewPortofolio"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="85dp"
-        android:text="View Portofolio"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/tvPhoneProfileContent"
-        android:layout_marginStart="28dp" />
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="100dp"
+        android:layout_below="@id/tvPhoneProfileContent">
 
-    <Button
-        android:id="@+id/btnViewReview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnViewPortofolio"
-        android:layout_alignBottom="@+id/btnViewPortofolio"
-        android:layout_marginStart="63dp"
-        android:layout_toEndOf="@+id/btnViewPortofolio"
-        android:text="View Review" />
+        <Button
+            android:id="@+id/btnViewPortofolio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/round_button_secondary_color"
+            android:text="View Portofolio" />
+
+        <Button
+            android:id="@+id/btnViewReview"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@drawable/round_button_secondary_color"
+            android:text="View Review" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>
