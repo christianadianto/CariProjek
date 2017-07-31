@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import edu.bluejack16_2.cariprojek.Controllers.UserController;
 import edu.bluejack16_2.cariprojek.Models.User;
 import edu.bluejack16_2.cariprojek.Utilities.Session;
 
@@ -42,8 +43,14 @@ public class ProfileFragment extends Fragment {
         tvAddress = (TextView) view.findViewById(R.id.tvAddressProfileContent);
         tvPhone = (TextView) view.findViewById(R.id.tvPhoneProfileContent);
 
+
         session = new Session(getContext());
-        user = session.getUser();
+        if(session.getSession("userId") == null || session.getSession("userId").equals(""))
+            user = session.getUser();
+        else{
+            String email = session.getSession("userId");
+            user = UserController.getUserByEmail(email);
+        }
 
         tvEmail.setText(user.getEmail());
         tvName.setText(user.getName());

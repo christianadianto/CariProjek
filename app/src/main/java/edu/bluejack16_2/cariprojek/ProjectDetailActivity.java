@@ -1,5 +1,7 @@
 package edu.bluejack16_2.cariprojek;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -14,7 +16,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.w3c.dom.Text;
 
 import java.util.Vector;
@@ -109,7 +110,10 @@ public class ProjectDetailActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(ProjectDetailActivity.this, "MASUK SHORT", Toast.LENGTH_SHORT).show();
-
+                Intent intent = new Intent(getApplicationContext(), ProfileOtherUserActivity.class);
+                User choosenUser = (User) listViewJoinedUserAdapter.getItem(i);
+                intent.putExtra("projectId", choosenUser.getEmail());
+                startActivity(intent);
             }
         });
 

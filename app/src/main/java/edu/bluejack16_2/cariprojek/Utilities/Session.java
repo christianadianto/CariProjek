@@ -36,4 +36,16 @@ public class Session {
         return user;
     }
 
+    public void setSession(String key, String value){
+        SharedPreferences.Editor edit = sharedPreference.edit();
+        edit.putString(key, value);
+        edit.apply();
+        edit.commit();
+    }
+
+    public String getSession(String key){
+        String value = sharedPreference.getString(key, null);
+        return value;
+    }
+
 }

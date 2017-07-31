@@ -1,5 +1,6 @@
 package edu.bluejack16_2.cariprojek;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -146,7 +147,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getProject();
         for (Project project:projects) {
             if(project.getStatus().equals("Open"))
-                isInDistance(project.getLatitude(), project.getLongitude(), project.getName(),                              project.getId());
+                isInDistance(project.getLatitude(), project.getLongitude(), project.getName(), project.getId());
         }
 
     }
@@ -174,7 +175,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 if(selectedMarker != null && marker.toString().equals(selectedMarker.toString())) {
                     String key = mHashMap.get(marker);
-                    Toast.makeText(MapsActivity.this, key, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(),ProjectDetailActivity.class);
+                    intent.putExtra("projectId",key);
+                    startActivity(intent);
                 }
                 selectedMarker = marker;
                 return false;

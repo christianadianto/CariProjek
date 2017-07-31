@@ -13,6 +13,7 @@ import android.widget.ListView;
 import java.util.Vector;
 
 import edu.bluejack16_2.cariprojek.Controllers.ProjectController;
+import edu.bluejack16_2.cariprojek.Controllers.UserController;
 import edu.bluejack16_2.cariprojek.Models.Project;
 import edu.bluejack16_2.cariprojek.Models.User;
 import edu.bluejack16_2.cariprojek.Utilities.Session;
@@ -39,7 +40,13 @@ public class ProfileWorkProjectFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_profile_work_project, container, false);
 
         session = new Session(getContext());
-        user = session.getUser();
+        if(session.getSession("userId") == null || session.getSession("userId").equals(""))
+            user = session.getUser();
+        else{
+            String email = session.getSession("userId");
+            user = UserController.getUserByEmail(email);
+        }
+
         projects = ProjectController.getWorkedProjectByEmail(user.getEmail());
 
         ListView listView = (ListView) view.findViewById(R.id.listViewWorkProject);

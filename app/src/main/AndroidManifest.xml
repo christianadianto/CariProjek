@@ -60,7 +60,8 @@
         <activity android:name=".ProjectReviewActivity" />
         <activity android:name=".DetailModuleActivity" />
         <activity android:name=".ProjectDetailActivity" />
-        <activity android:name=".RoomChatActivity"></activity>
+        <activity android:name=".RoomChatActivity" />
+        <activity android:name=".ProfileOtherUserActivity"></activity>
     </application>
 
 </manifest>

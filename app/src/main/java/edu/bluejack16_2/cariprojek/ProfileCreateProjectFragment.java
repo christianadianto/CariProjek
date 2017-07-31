@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.Vector;
 
 import edu.bluejack16_2.cariprojek.Controllers.ProjectController;
+import edu.bluejack16_2.cariprojek.Controllers.UserController;
 import edu.bluejack16_2.cariprojek.Models.Project;
 import edu.bluejack16_2.cariprojek.Models.User;
 import edu.bluejack16_2.cariprojek.Utilities.Session;
@@ -45,8 +46,15 @@ public class ProfileCreateProjectFragment extends Fragment {
         ListView listView = (ListView) view.findViewById(R.id.listViewProject);
         final ListViewProjectAdapter listViewProjectAdapter = new ListViewProjectAdapter(getContext());
 
+
         session = new Session(getContext());
-        user = session.getUser();
+        if(session.getSession("userId") == null || session.getSession("userId").equals(""))
+            user = session.getUser();
+        else{
+            String email = session.getSession("userId");
+            user = UserController.getUserByEmail(email);
+        }
+
         projects = ProjectController.getProjectByEmail(user.getEmail());
 
         for (Project project: projects) {
