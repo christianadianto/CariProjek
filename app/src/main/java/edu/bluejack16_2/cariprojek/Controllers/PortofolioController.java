@@ -109,7 +109,6 @@ public class PortofolioController {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Portofolios").child(portofolio.getId());
         myRef.removeValue();
-//        new UpdatePortofolioFragment().getPortofolioList();
     }
 
 

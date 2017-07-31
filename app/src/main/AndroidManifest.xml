@@ -61,7 +61,8 @@
         <activity android:name=".DetailModuleActivity" />
         <activity android:name=".ProjectDetailActivity" />
         <activity android:name=".RoomChatActivity" />
-        <activity android:name=".ProfileOtherUserActivity"></activity>
+        <activity android:name=".ProfileOtherUserActivity" />
+        <activity android:name=".ViewPortofolioActivity"></activity>
     </application>
 
 </manifest>

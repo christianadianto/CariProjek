@@ -87,7 +87,6 @@
         android:layout_marginTop="20dp"
         android:layout_below="@+id/txtUpdateDescriptionPortofolio">
 
-
         <Button
             android:id="@+id/btnUpdatePortofolio"
             android:layout_width="wrap_content"
