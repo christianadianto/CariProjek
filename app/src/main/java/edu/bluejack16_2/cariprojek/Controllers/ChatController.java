@@ -19,7 +19,6 @@ import edu.bluejack16_2.cariprojek.Models.User;
 
 public class ChatController {
 
-
     private static FirebaseDatabase database;
     private static DatabaseReference myRef;
 

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -26,7 +27,7 @@ import edu.bluejack16_2.cariprojek.Utilities.Session;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MenuHomeFragment extends Fragment {
+public class MenuHomeFragment extends Fragment implements View.OnClickListener{
 
     Vector<Project> projects;
     SharedPreferences sharedPreferences;
@@ -35,6 +36,7 @@ public class MenuHomeFragment extends Fragment {
     Spinner spCategory;
     ListView listView;
     ListViewProjectAdapter listViewProjectAdapter;
+    Button btnAddProgress;
 
     public MenuHomeFragment() {
     }
@@ -43,11 +45,12 @@ public class MenuHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_menu_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu_home, container, false);
 
         listView = (ListView) view.findViewById(R.id.listViewHome);
         listViewProjectAdapter = new ListViewProjectAdapter(getContext());
         spCategory = (Spinner) view.findViewById(R.id.spCategoryHome);
+        btnAddProgress = (Button) view.findViewById(R.id.btnAddProgress);
 
         session = new Session(getContext());
         user = session.getUser();
@@ -76,7 +79,9 @@ public class MenuHomeFragment extends Fragment {
 
             }
         });
+        btnAddProgress.setOnClickListener(this);
         return view;
+
     }
 
     public void getProject(){
@@ -87,5 +92,13 @@ public class MenuHomeFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Cari Project ");
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == btnAddProgress){
+            Intent intent = new Intent(getActivity(), AddProgressActivity.class);
+            startActivity(intent);
+        }
     }
 }

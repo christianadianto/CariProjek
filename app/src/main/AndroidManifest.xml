@@ -62,7 +62,8 @@
         <activity android:name=".ProjectDetailActivity" />
         <activity android:name=".RoomChatActivity" />
         <activity android:name=".ProfileOtherUserActivity" />
-        <activity android:name=".ViewPortofolioActivity"></activity>
+        <activity android:name=".ViewPortofolioActivity" />
+        <activity android:name=".AddProgressActivity"></activity>
     </application>
 
 </manifest>

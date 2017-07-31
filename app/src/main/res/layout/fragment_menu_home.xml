@@ -21,4 +21,12 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/spCategoryHome"/>
 
+    <Button
+        android:id="@+id/btnAddProgress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+
 </RelativeLayout>

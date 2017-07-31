@@ -153,7 +153,7 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.nav_update_portofolio:
                 fragment = new UpdatePortofolioFragment();
-                break;
+            break;
 
         }
 

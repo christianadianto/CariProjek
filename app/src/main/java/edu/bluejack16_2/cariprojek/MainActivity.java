@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import edu.bluejack16_2.cariprojek.Controllers.ChatRoomController;
 import edu.bluejack16_2.cariprojek.Controllers.PortofolioController;
+import edu.bluejack16_2.cariprojek.Controllers.ProgressController;
 import edu.bluejack16_2.cariprojek.Controllers.ProjectController;
 import edu.bluejack16_2.cariprojek.Controllers.ProjectDetailController;
 import edu.bluejack16_2.cariprojek.Controllers.RateController;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         ChatRoomController.getInstance();
         RateController.getInstance();
         RateReminderController.getInstance();
+        ProgressController.getInstance();
 
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegis = (Button) findViewById(R.id.btnRegister);
