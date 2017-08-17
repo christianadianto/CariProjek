@@ -65,6 +65,8 @@ public class CreatePortofolioFragment extends Fragment implements View.OnClickLi
             PortofolioController.insertPortofolio(portofolio);
             Toast.makeText(getActivity(), "Success to create portofolio", Toast.LENGTH_SHORT).show();
 
+            getFragmentManager().popBackStack();
+
         }
     }
 }

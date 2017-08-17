@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="edu.bluejack16_2.cariprojek.MenuHomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -21,12 +22,33 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/spCategoryHome"/>
 
-    <Button
-        android:id="@+id/btnAddProgress"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="20dp"
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_update"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_above="@+id/btn_add"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:src="@mipmap/ic_update"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_add"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_above="@+id/btn_project"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:src="@mipmap/ic_plus"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_project"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_margin="20dp"
+        android:src="@mipmap/ic_project"/>
 
 </RelativeLayout>

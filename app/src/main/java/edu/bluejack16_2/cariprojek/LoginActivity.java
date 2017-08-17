@@ -5,9 +5,11 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -48,7 +50,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     Button btnLogin;
     EditText txtEmail;
     EditText txtPassword;
+    TextView tvRegister;
+
     static final int REQ_CODE = 9001;
+
     String facebookEmail;
     String facebookName;
 
@@ -57,7 +62,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     FirebaseDatabase database;
     DatabaseReference myRef;
-    SharedPreferences sharedPreference;
 
     Session session;
 
@@ -78,6 +82,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         loginButton.setReadPermissions(Arrays.asList("email","public_profile", "user_friends"));
         signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         btnLogin = (Button) findViewById(R.id.btnLogin);
+        tvRegister = (TextView) findViewById(R.id.tvRegister);
 
         session = new Session(getApplicationContext());
 
@@ -95,6 +100,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .build();
 
         UserController.getInstance();
+
+        tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +137,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     Toast.makeText(LoginActivity.this, err, Toast.LENGTH_SHORT).show();
                     return;
                 }
-               checkUser(email,password);
+
+                if(checkUser(email,password)){
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
@@ -185,18 +204,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     }
 
-    private void checkUser(String userEmail, final String userPassword) {
+    private boolean checkUser(String userEmail, final String userPassword) {
 
         if(UserController.userAuth(userEmail, userPassword)){
             User user = UserController.getUserByEmail(userEmail);
             session.setUser(user);
-
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(intent);
-            finish();
+            return true;
         }
         else{
             Toast.makeText(this, "Email Or Password Invalid", Toast.LENGTH_SHORT).show();
+            return false;
         }
 
     }
@@ -215,10 +232,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             UserController.insertUser(user);
         }
         session.setUser(user);
-
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(intent);
-        finish();
+        //finish();
 
     }
 

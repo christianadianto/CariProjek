@@ -107,6 +107,12 @@ public class HomeActivity extends AppCompatActivity
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
             editor.commit();
+
+            Session session = new Session(getApplicationContext());
+            session.logoutSession();
+
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
             finish();
         }
 
@@ -139,27 +145,14 @@ public class HomeActivity extends AppCompatActivity
                 Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_create_project:
-                fragment = new CreateProjectFragment();
-                break;
-            case R.id.nav_update_project:
-                fragment = new UpdateProjectFragment();
-                break;
             case R.id.nav_learning_module:
                 fragment = new LearningModuleFragment();
                 break;
-            case R.id.nav_insert_portofolio:
-                fragment = new CreatePortofolioFragment();
-                break;
-            case R.id.nav_update_portofolio:
-                fragment = new UpdatePortofolioFragment();
-            break;
-
         }
 
-        if(fragment !=null){
+        if(fragment != null){
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
+            ft.replace(R.id.content_frame, fragment).addToBackStack("back");
             ft.commit();
         }
     }

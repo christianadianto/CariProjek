@@ -3,8 +3,12 @@ package edu.bluejack16_2.cariprojek;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import edu.bluejack16_2.cariprojek.Controllers.ChatRoomController;
 import edu.bluejack16_2.cariprojek.Controllers.PortofolioController;
@@ -15,12 +19,10 @@ import edu.bluejack16_2.cariprojek.Controllers.RateController;
 import edu.bluejack16_2.cariprojek.Controllers.RateReminderController;
 import edu.bluejack16_2.cariprojek.Controllers.UserController;
 import edu.bluejack16_2.cariprojek.Models.Portofolio;
+import edu.bluejack16_2.cariprojek.Utilities.Session;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnLogin;
-    Button btnRegis;
-    Button btnExit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,32 +37,34 @@ public class MainActivity extends AppCompatActivity {
         RateReminderController.getInstance();
         ProgressController.getInstance();
 
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnRegis = (Button) findViewById(R.id.btnRegister);
-        btnExit = (Button) findViewById(R.id.btnExit);
+        RelativeLayout layout = new RelativeLayout(this);
+        ProgressBar progressBar = new ProgressBar(this,null,android.R.attr.progressBarStyleLarge);
+        progressBar.setIndeterminate(true);
+        progressBar.setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100,100);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        layout.addView(progressBar,params);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+        setContentView(layout);
 
-        btnRegis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
+        Intent intent;
+        Session session = new Session(getApplicationContext());
 
-        btnExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                System.exit(0);
-            }
-        });
+        if(hasSession())
+            intent = new Intent(getApplicationContext(), HomeActivity.class);
+        else
+            intent = new Intent(getApplicationContext(), LoginActivity.class);
+
+        startActivity(intent);
+        finish();
     }
+
+    private boolean hasSession(){
+        Session session = new Session(getApplicationContext());
+        if(session.getUser() != null)
+            return true;
+
+        return false;
+    }
+
 }

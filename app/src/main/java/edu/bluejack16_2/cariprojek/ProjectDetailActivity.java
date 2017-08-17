@@ -4,6 +4,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
+
 import org.w3c.dom.Text;
 
 import java.util.Vector;
@@ -46,8 +51,10 @@ public class ProjectDetailActivity extends AppCompatActivity implements View.OnC
     private LinearLayout layoutChoosenUser;
     private LinearLayout layoutButton;
 
-    private Button btnJoin;
-    private Button btnChat;
+    private FloatingActionButton btnJoin;
+    private FloatingActionButton btnChat;
+    private FloatingActionButton btnShare;
+    private FloatingActionButton btnAddProgress;
 
     private Session session;
     private User user;
@@ -94,22 +101,26 @@ public class ProjectDetailActivity extends AppCompatActivity implements View.OnC
         tvChoosenName = (TextView) findViewById(R.id.tvChoosenName);
         tvChoosenUserRate = (TextView) findViewById(R.id.tvChoosenUserRate);
 
-        btnJoin = (Button) findViewById(R.id.btnJoin);
-        btnChat = (Button) findViewById(R.id.btnChat);
+        btnJoin = (FloatingActionButton) findViewById(R.id.btnJoin);
+        btnChat = (FloatingActionButton) findViewById(R.id.btnChat);
+        btnShare = (FloatingActionButton) findViewById(R.id.btnShare);
+        btnAddProgress = (FloatingActionButton) findViewById(R.id.btnAddProgress);
 
         btnJoin.setVisibility(View.GONE);
         btnChat.setVisibility(View.GONE);
+        btnAddProgress.setVisibility(View.GONE);
 
         layoutChoosenUser = (LinearLayout) findViewById(R.id.choosenUserSection);
         layoutButton = (LinearLayout) findViewById(R.id.buttonSection);
 
         btnJoin.setOnClickListener(this);
         btnChat.setOnClickListener(this);
+        btnShare.setOnClickListener(this);
+        btnAddProgress.setOnClickListener(this);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(ProjectDetailActivity.this, "MASUK SHORT", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), ProfileOtherUserActivity.class);
                 User choosenUser = (User) listViewJoinedUserAdapter.getItem(i);
                 intent.putExtra("projectId", choosenUser.getEmail());
@@ -137,12 +148,12 @@ public class ProjectDetailActivity extends AppCompatActivity implements View.OnC
 
         tvProjectName.setText(project.getName());
         tvProjectCategory.setText(category);
-        tvProjectBudget.setText(String.valueOf(project.getBudget()));
+        tvProjectBudget.setText(changeBudgetFormat(String.valueOf(project.getBudget())));
         tvProjectDescription.setText(project.getDescription());
         tvProjectStatus.setText(project.getStatus());
 
         tvOwnerName.setText(ownerProject.getName());
-        tvOwnerRate.setText(String.valueOf(5));
+        tvOwnerRate.setText(ownerProject.getRate(ownerProject.getId()));
 
     }
 
@@ -161,17 +172,18 @@ public class ProjectDetailActivity extends AppCompatActivity implements View.OnC
         else if(isOwnerProject() && !isAvailable()) {
             btnJoin.setVisibility(View.GONE);
             btnChat.setVisibility(View.VISIBLE);
+            btnAddProgress.setVisibility(View.VISIBLE);
         }
         else if(isProjectManager()) {
             btnJoin.setVisibility(View.GONE);
             btnChat.setVisibility(View.VISIBLE);
+            btnAddProgress.setVisibility(View.VISIBLE);
         }
         else if(!isProjectManager() && isAvailable()){
             btnJoin.setVisibility(View.VISIBLE);
             btnChat.setVisibility(View.GONE);
         }
 
-        Log.e("TOGGLE", "toggleButtonForUser: " + isOwnerProject() + " " + isAvailable() + " " + isProjectManager() );
     }
 
     private void checkProjectManager(){
@@ -180,7 +192,7 @@ public class ProjectDetailActivity extends AppCompatActivity implements View.OnC
             User user = UserController.getChoosenUser(projectId);
             tvChoosenUser.setText((""+user.getName().charAt(0)).toUpperCase());
             tvChoosenName.setText(user.getName());
-            tvChoosenUserRate.setText(String.valueOf(2));
+            tvChoosenUserRate.setText(user.getRate(user.getId()));
             btnChat.setVisibility(View.VISIBLE);
         }
         else{
@@ -225,7 +237,6 @@ public class ProjectDetailActivity extends AppCompatActivity implements View.OnC
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(ProjectDetailActivity.this, "MASUK", Toast.LENGTH_SHORT).show();
                 ProjectDetailController.updateProjectDetail(projectId, user.getEmail());
             }
         });
@@ -250,13 +261,29 @@ public class ProjectDetailActivity extends AppCompatActivity implements View.OnC
             refreshPojectDetail();
         }
 
-        if(view == btnChat){
-            Toast.makeText(this, "btnChat", Toast.LENGTH_SHORT).show();
+        else if(view == btnChat){
             Intent intent = new Intent(getApplicationContext(), RoomChatActivity.class);
             //Project project = (Project) listViewProjectAdapter.getItem(position);
             intent.putExtra("projectId", project.getId());
             startActivity(intent);
         }
+
+        else if(view == btnShare){
+            String email = user.getEmail();
+            String projectName = tvProjectName.getText().toString();
+            ShareDialog shareDialog = new ShareDialog(this);
+            ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                    .setQuote(projectName+" shared by"+email)
+                    .setContentUrl(Uri.parse("http://developers.facebook.com/android"))
+                    .build();
+            shareDialog.show(linkContent);
+        }
+        else if(view == btnAddProgress){
+            Intent intent = new Intent(getApplicationContext(), AddProgressActivity.class);
+            intent.putExtra("projectId", project.getId());
+            startActivity(intent);
+        }
+
     }
 
     private boolean isOwnerProject(){
@@ -272,6 +299,12 @@ public class ProjectDetailActivity extends AppCompatActivity implements View.OnC
             return UserController.getChoosenUser(projectId).getId().equals(user.getId()) ? true : false;
 
         return false;
+    }
+
+    private String changeBudgetFormat(String budget){
+
+        budget = "IDR " + budget;
+        return budget;
     }
 
 }

@@ -28,7 +28,6 @@ public class ProjectDetailController {
     private static Vector<ProjectDetail> projectDetails;
     private Query query;
 
-
     private static FirebaseDatabase database;
     private static DatabaseReference myRef;
 
@@ -126,10 +125,10 @@ public class ProjectDetailController {
         return false;
     }
 
-    public static boolean haveProjectDetail(String projectId){
+    public static boolean haveChoosedProjectDetail(String projectId){
 
         for (ProjectDetail projectDetail:projectDetails) {
-            if(projectDetail.getProjectId().equals(projectId))
+            if(projectDetail.getProjectId().equals(projectId) && projectDetail.getStatus().equals(CHOOSEN))
                 return true;
         }
 

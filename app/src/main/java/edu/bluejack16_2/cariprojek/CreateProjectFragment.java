@@ -78,18 +78,26 @@ public class CreateProjectFragment extends Fragment implements View.OnClickListe
             int budget = Integer.parseInt(txtBudget.getText().toString());
             String timestamp = String.valueOf(System.currentTimeMillis()/1000);
 
-            location = gpsTracker.getLocation();
-            double latatide = location.getLatitude();
-            double longitude = location.getLongitude();
+            try{
 
-            Project project = new Project("", email, name, category, description, budget, "Open", timestamp, latatide, longitude);
-            ProjectController.insertProject(project);
+                location = gpsTracker.getLocation();
+                double latatide = location.getLatitude();
+                double longitude = location.getLongitude();
 
-            Toast.makeText(getActivity(), "Success to create project", Toast.LENGTH_SHORT).show();
-            showNotif(getView(),name);
+                Project project = new Project("", email, name, category, description, budget, "Open", timestamp, latatide, longitude);
+                ProjectController.insertProject(project);
+
+                Toast.makeText(getActivity(), "Success to create project", Toast.LENGTH_SHORT).show();
+                showNotif(getView(),name);
+                getFragmentManager().popBackStack();
+
+            }catch (Exception e){
+                Toast.makeText(getActivity(), "Please turn on your GPS", Toast.LENGTH_SHORT).show();
+            }
+
+
 
         }
-
     }
 
     private void showNotif(View v,String name) {
@@ -100,4 +108,6 @@ public class CreateProjectFragment extends Fragment implements View.OnClickListe
         NotificationManager nm = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         nm.notify(0,builder.build());
     }
+
+
 }

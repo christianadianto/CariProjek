@@ -56,11 +56,15 @@ public class ListViewProjectAdapter extends BaseAdapter {
         String category = ProjectController.minifyCategoryString(projects.get(position).getCategory());
         String description = ProjectController.minifyDescriptionString(projects.get(position).getDescription());
 
-        tvName.setText(projects.get(position).getName());
-        tvBudget.setText(String.valueOf(projects.get(position).getBudget()));
+        String name = projects.get(position).getName();
+        String budget = changeBudgetFormat(String.valueOf(projects.get(position).getBudget()));
+        String status = projects.get(position).getStatus();
+
+        tvName.setText(name);
+        tvBudget.setText(budget);
         tvCategory.setText(category);
         tvDescription.setText(description);
-        tvStatus.setText(projects.get(position).getStatus());
+        tvStatus.setText(status);
 
         return convertView;
     }
@@ -72,6 +76,12 @@ public class ListViewProjectAdapter extends BaseAdapter {
     public void refresh(Vector<Project>projects){
         this.projects = projects;
         this.notifyDataSetChanged();
+    }
+
+    private String changeBudgetFormat(String budget){
+
+        budget = "IDR " + budget;
+        return budget;
     }
 
 }

@@ -1,17 +1,16 @@
 package edu.bluejack16_2.cariprojek;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import edu.bluejack16_2.cariprojek.Controllers.UserController;
 import edu.bluejack16_2.cariprojek.Models.User;
@@ -27,7 +26,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     TextView tvName;
     TextView tvAddress;
     TextView tvPhone;
-    Button btnViewPortofolio;
+
+    FloatingActionButton btnPortofolio;
+    FloatingActionButton btnAdd;
+    FloatingActionButton btnUpdate;
+    FloatingActionButton btnViewPortofolio;
+
+    boolean isClicked;
+
     Button btnViewReview;
     Session session;
     User user;
@@ -47,8 +53,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         tvName = (TextView) view.findViewById(R.id.tvNameProfileContent);
         tvAddress = (TextView) view.findViewById(R.id.tvAddressProfileContent);
         tvPhone = (TextView) view.findViewById(R.id.tvPhoneProfileContent);
-        btnViewPortofolio = (Button) view.findViewById(R.id.btnViewPortofolio);
-        btnViewReview = (Button) view.findViewById(R.id.btnViewReview);
+        btnPortofolio = (FloatingActionButton) view.findViewById(R.id.btn_portofolio);
+        btnAdd = (FloatingActionButton) view.findViewById(R.id.btn_add);
+        btnUpdate = (FloatingActionButton) view.findViewById(R.id.btn_update);
+        btnViewPortofolio = (FloatingActionButton) view.findViewById(R.id.btn_view);
+        //btnViewReview = (Button) view.findViewById(R.id.btnViewReview);
+
+        btnAdd.hide();
+        btnUpdate.hide();
+        isClicked = false;
 
         session = new Session(getContext());
         if(session.getSession("userId") == null || session.getSession("userId").equals(""))
@@ -56,6 +69,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         else{
             String email = session.getSession("userId");
             user = UserController.getUserByEmail(email);
+            btnPortofolio.hide();
         }
 
         tvEmail.setText(user.getEmail());
@@ -63,21 +77,49 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         tvAddress.setText(user.getAddress());
         tvPhone.setText(user.getPhonenumber());
 
-        btnViewReview.setOnClickListener(this);
+        btnAdd.setOnClickListener(this);
+        btnUpdate.setOnClickListener(this);
+        btnPortofolio.setOnClickListener(this);
         btnViewPortofolio.setOnClickListener(this);
-
         return  view;
     }
 
     @Override
     public void onClick(View v) {
-        if(v == btnViewReview){
-            Toast.makeText(getContext(), "review", Toast.LENGTH_SHORT).show();
+        if(v == btnPortofolio){
+            toggleButton();
+        }
+        else if(v == btnAdd){
+            changeFragment(new CreatePortofolioFragment());
+        }
+        else if(v == btnUpdate){
+            changeFragment(new UpdatePortofolioFragment());
         }
         else if(v == btnViewPortofolio){
-            Intent intent = new Intent(getContext(),ViewPortofolioActivity.class);
+            Intent intent = new Intent(getContext(), ViewPortofolioActivity.class);
             startActivity(intent);
         }
     }
+
+    public void changeFragment(Fragment fragment){
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment).addToBackStack("back");
+        ft.commit();
+    }
+
+    public void toggleButton(){
+        if(isClicked){
+            btnAdd.hide();
+            btnUpdate.hide();
+            isClicked = false;
+        }
+        else{
+            btnUpdate.show();
+            btnAdd.show();
+            isClicked = true;
+        }
+
+    }
+
 }
 

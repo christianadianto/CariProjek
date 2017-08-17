@@ -64,21 +64,32 @@ public class ProgressController {
     }
 
     private String getChild(DataSnapshot data, String key){
-        return data.child("rate").child(key).getValue().toString();
+        return data.child("progress").child(key).getValue().toString();
     }
 
     public static Vector<Progress> getProgresses(){
         return progresses;
     }
 
-    public static void insertRate(Progress progress){
+    public static Vector<Progress> getProgressesByProjectId(String projectId){
+        Vector<Progress> filtered_progress = new Vector<>();
+
+        for (Progress progress:progresses){
+            if(progress.getProjectId().equals(projectId))
+                filtered_progress.add(progress);
+        }
+
+        return filtered_progress;
+    }
+
+    public static void insertProgress(Progress progress){
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Progresses");
 
         DatabaseReference new_progress = myRef.push();
         progress.setId(new_progress.getKey());
-        new_progress.child("rate").setValue(progress);
+        new_progress.child("progress").setValue(progress);
 
     }
 

@@ -1,5 +1,6 @@
 package edu.bluejack16_2.cariprojek;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +31,7 @@ public class RoomChatActivity extends AppCompatActivity implements View.OnClickL
     private Vector<Chat> chats;
 
     private EditText txtMessage;
-    private Button btnSend;
+    private FloatingActionButton btnSend;
 
     private ListView listView;
     private ListViewChatAdapter listViewChatAdapter;
@@ -56,7 +57,7 @@ public class RoomChatActivity extends AppCompatActivity implements View.OnClickL
         listViewChatAdapter = new ListViewChatAdapter(getApplicationContext());
 
         txtMessage = (EditText) findViewById(R.id.txtMessage);
-        btnSend = (Button) findViewById(R.id.btnSend);
+        btnSend = (FloatingActionButton) findViewById(R.id.btnSend);
 
         btnSend.setOnClickListener(this);
 

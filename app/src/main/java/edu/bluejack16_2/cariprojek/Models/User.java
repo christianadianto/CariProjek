@@ -1,5 +1,7 @@
 package edu.bluejack16_2.cariprojek.Models;
 
+import edu.bluejack16_2.cariprojek.Controllers.RateController;
+
 /**
  * Created by chris on 06/22/2017.
  */
@@ -68,5 +70,9 @@ public class User {
 
     public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
+    }
+
+    public String getRate(String userId){
+        return String.valueOf(RateController.getRateAverageByUserId(userId));
     }
 }

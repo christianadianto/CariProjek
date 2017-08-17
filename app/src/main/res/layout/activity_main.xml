@@ -6,27 +6,5 @@
     android:layout_height="match_parent"
     tools:context="edu.bluejack16_2.cariprojek.MainActivity">
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
 
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:layout_below="@+id/btnLogin"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:id="@+id/btnExit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Exit"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
 </android.widget.RelativeLayout>

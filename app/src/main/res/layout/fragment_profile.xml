@@ -98,33 +98,42 @@
         android:textStyle="bold"
         android:text="TextView"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="100dp"
-        android:layout_below="@id/tvPhoneProfileContent">
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_update"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_above="@+id/btn_add"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:src="@mipmap/ic_update"/>
 
-        <Button
-            android:id="@+id/btnViewPortofolio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/round_button_secondary_color"
-            android:text="View Portofolio" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_add"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_above="@+id/btn_portofolio"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:src="@mipmap/ic_plus"/>
 
-        <Button
-            android:id="@+id/btnViewReview"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_portofolio"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_menu_send"/>
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:background="@drawable/round_button_secondary_color"
-            android:text="View Review" />
-
-    </LinearLayout>
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_view"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="100dp"
+        android:src="@drawable/ic_assignment"/>
 
 </RelativeLayout>

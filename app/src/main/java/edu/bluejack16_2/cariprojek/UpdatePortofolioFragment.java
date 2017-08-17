@@ -177,5 +177,7 @@ public class UpdatePortofolioFragment extends Fragment implements View.OnClickLi
         else if(v == btnDelete){
             PortofolioController.deletePortofolio(selectedPortofolio);
         }
+
+        getFragmentManager().popBackStack();
     }
 }

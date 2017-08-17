@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.bluejack16_2.cariprojek.Controllers.UserController;
@@ -21,6 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText txtName;
     EditText txtAddress;
     EditText txtPhone;
+    TextView tvLogin;
 
     Session session;
 
@@ -35,8 +37,18 @@ public class RegisterActivity extends AppCompatActivity {
         txtName = (EditText) findViewById(R.id.txtNameRegis);
         txtAddress = (EditText) findViewById(R.id.txtAddressRegis);
         txtPhone = (EditText) findViewById(R.id.txtPhoneRegis);
+        tvLogin = (TextView) findViewById(R.id.tvLogin);
 
         session = new Session(getApplicationContext());
+
+        tvLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         btnRegis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +84,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
+
+
 
 
 }

@@ -207,6 +207,8 @@ public class UpdateProjectFragment extends Fragment implements View.OnClickListe
             ProjectController.deleteProject(selectedProject);
             getProjectList();
         }
+
+        getFragmentManager().popBackStack();
     }
 
     private void setFormWithProjectData(Project project){

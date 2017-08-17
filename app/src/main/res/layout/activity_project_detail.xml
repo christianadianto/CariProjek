@@ -239,20 +239,35 @@
         android:gravity="right"
         android:layout_alignParentBottom="true">
 
-        <Button
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/btnJoin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:background="@drawable/round_button_secondary_color"
-            android:text="Join"/>
+            android:src="@mipmap/ic_join"/>
 
-        <Button
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btnAddProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/ic_update"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btnShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="@color/com_facebook_blue"
+            android:src="@drawable/com_facebook_button_icon_blue"/>
+
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/btnChat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_button_secondary_color"
-            android:text="Chat"/>
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_menu_send"/>
+
     </LinearLayout>
 
 </RelativeLayout>

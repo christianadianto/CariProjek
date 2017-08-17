@@ -55,7 +55,7 @@ public class ListViewJoinedUserAdapter extends BaseAdapter{
 
             tvChoosenUser.setText((""+users.get(position).getName().charAt(0)).toUpperCase());
             tvChoosenName.setText(users.get(position).getName());
-            tvChoosenUserRate.setText(String.valueOf(4));
+            tvChoosenUserRate.setText(users.get(position).getRate(users.get(position).getId()));
 
         }
 

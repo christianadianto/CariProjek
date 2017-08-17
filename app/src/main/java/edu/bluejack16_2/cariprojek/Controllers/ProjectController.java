@@ -12,6 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Vector;
 
 import edu.bluejack16_2.cariprojek.Models.Project;
+import edu.bluejack16_2.cariprojek.Models.ProjectDetail;
 
 /**
  * Created by chris on 07/28/2017.
@@ -81,6 +82,34 @@ public class ProjectController {
     public static Vector<Project> getProjects(){
         return projects;
     }
+
+    public static boolean isOpen(Project project){
+        if(ProjectDetailController.haveChoosedProjectDetail(project.getId())){
+            return false;
+        }
+
+        return true;
+    }
+
+    public static Vector<Project> getProjectOpened(){
+
+        Vector<Project> filtered_projects = new Vector<>();
+
+        for (Project project:projects) {
+            if(project.getStatus().equals("Closed")){
+                continue;
+            }
+            else if(isOpen(project)){
+                continue;
+            }
+
+            filtered_projects.add(project);
+        }
+
+        return filtered_projects;
+
+    }
+
 
     public static Project getProjectById(String projectId){
         for (Project project:projects) {

@@ -48,4 +48,8 @@ public class Session {
         return value;
     }
 
+    public void logoutSession(){
+        setUser(null);
+    }
+
 }

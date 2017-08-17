@@ -94,6 +94,9 @@ public class RateController {
             }
         }
 
+        if(rate_count == 0)
+            return 0;
+
         return total/rate_count;
 
     }

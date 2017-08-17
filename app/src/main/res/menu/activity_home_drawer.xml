@@ -8,49 +8,16 @@
             android:title="Home" />
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_person"
             android:title="Profile" />
         <item
-            android:id="@+id/nav_create_project"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Create Project" />
-        <item
-            android:id="@+id/nav_update_project"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Update Project" />
-        />
-        <item
             android:id="@+id/nav_search_project"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_search"
             android:title="Search Project" />
         <item
             android:id="@+id/nav_learning_module"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_assignment"
             android:title="Learning Module"
         />
-        <item
-            android:id="@+id/nav_insert_portofolio"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Insert Portofolio"
-            />
-        <item
-            android:id="@+id/nav_update_portofolio"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Update Portofolio"
-            />
     </group>
-
-    <!--<item android:title="Communicate">-->
-        <!--<menu>-->
-            <!--<item-->
-                <!--android:id="@+id/nav_share"-->
-                <!--android:icon="@drawable/ic_menu_share"-->
-                <!--android:title="Share" />-->
-            <!--<item-->
-                <!--android:id="@+id/nav_send"-->
-                <!--android:icon="@drawable/ic_menu_send"-->
-                <!--android:title="Send" />-->
-        <!--</menu>-->
-    <!--</item>-->
-
 </menu>

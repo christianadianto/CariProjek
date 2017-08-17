@@ -1,5 +1,6 @@
 package edu.bluejack16_2.cariprojek;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -90,6 +91,10 @@ public class ProjectReviewActivity extends AppCompatActivity implements View.OnC
             ReviewController.insertReview(review);
 
             Toast.makeText(this, "Success Insert Review", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 }

@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,10 @@ import edu.bluejack16_2.cariprojek.Utilities.Session;
  */
 public class MenuHomeFragment extends Fragment implements View.OnClickListener{
 
+    FloatingActionButton btnProject;
+    FloatingActionButton btnAdd;
+    FloatingActionButton btnUpdate;
+
     Vector<Project> projects;
     SharedPreferences sharedPreferences;
     User user;
@@ -36,7 +43,8 @@ public class MenuHomeFragment extends Fragment implements View.OnClickListener{
     Spinner spCategory;
     ListView listView;
     ListViewProjectAdapter listViewProjectAdapter;
-    Button btnAddProgress;
+
+    boolean btnProjectIsClicked;
 
     public MenuHomeFragment() {
     }
@@ -47,15 +55,26 @@ public class MenuHomeFragment extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_menu_home, container, false);
 
+        btnProjectIsClicked = false;
+        btnProject = (FloatingActionButton) view.findViewById(R.id.btn_project);
+        btnAdd = (FloatingActionButton) view.findViewById(R.id.btn_add);
+        btnUpdate = (FloatingActionButton) view.findViewById(R.id.btn_update);
+
+        btnAdd.hide();
+        btnUpdate.hide();
+
         listView = (ListView) view.findViewById(R.id.listViewHome);
         listViewProjectAdapter = new ListViewProjectAdapter(getContext());
         spCategory = (Spinner) view.findViewById(R.id.spCategoryHome);
-        btnAddProgress = (Button) view.findViewById(R.id.btnAddProgress);
 
         session = new Session(getContext());
         user = session.getUser();
-        projects = ProjectController.getProjects();
+
+        ProjectController.getInstance();
+        projects = ProjectController.getProjectOpened();
         listView.setAdapter(listViewProjectAdapter);
+
+        Log.e("PROJECT", "onCreateView: " );
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -79,13 +98,37 @@ public class MenuHomeFragment extends Fragment implements View.OnClickListener{
 
             }
         });
-        btnAddProgress.setOnClickListener(this);
+
+        btnProject.setOnClickListener(this);
+        btnAdd.setOnClickListener(this);
+        btnUpdate.setOnClickListener(this);
+
         return view;
 
     }
 
     public void getProject(){
         listViewProjectAdapter.refresh(projects);
+    }
+
+
+    private void toggleFloatingButton(){
+        if(btnProjectIsClicked){
+            btnAdd.hide();
+            btnUpdate.hide();
+            btnProjectIsClicked = false;
+        }
+        else{
+            btnAdd.show();
+            btnUpdate.show();
+            btnProjectIsClicked = true;
+        }
+    }
+
+    private void changeFragment(Fragment fragment){
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment).addToBackStack("back");
+        ft.commit();
     }
 
     @Override
@@ -96,9 +139,19 @@ public class MenuHomeFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        if(view == btnAddProgress){
-            Intent intent = new Intent(getActivity(), AddProgressActivity.class);
-            startActivity(intent);
+
+        if(view == btnProject){
+            toggleFloatingButton();
         }
+
+        if(view == btnAdd){
+            changeFragment(new CreateProjectFragment());
+        }
+
+        if(view == btnUpdate){
+            changeFragment(new UpdateProjectFragment());
+        }
+
     }
+
 }

@@ -1,29 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
 
     <TextView
-        android:id="@+id/tvViewTitlePortofolio"
+        android:id="@+id/tvViewPortofolioName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:gravity="center"
         android:textColor="@color/colorSecondary"
         android:textSize="30dp"
         android:textStyle="bold"
         android:text="My Portofolio"></TextView>
-
-    <TextView
-        android:id="@+id/tvViewPortofolioName"
-        android:layout_width="270dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/tvViewTitlePortofolio"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/round_edittext"
-        android:padding="8dp"
-        android:text="Project Name"
-        android:textColor="@color/colorPrimaryDark"/>
 
     <TextView
         android:id="@+id/tvViewPortofolioUrl"
@@ -61,6 +50,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/round_edittext"
         android:padding="8dp"
+        android:layout_marginBottom="10dp"
         android:text="Project Description"
         android:textColor="@color/colorPrimaryDark"/>
 
